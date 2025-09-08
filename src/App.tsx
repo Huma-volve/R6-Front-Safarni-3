@@ -1,13 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { createBrowserRouter } from "react-router";
+import { RouterProvider } from "react-router/dom";
+import PageLayout from "./pages/PageLayout";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <PageLayout />,
+    children: [],
+  },
+]);
 
 function App() {
-    return (
-        <div className="flex min-h-svh flex-col items-center justify-center">
-            <Button>Click me</Button>
-            <Search className="text-red-600" />
-        </div>
-    );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
