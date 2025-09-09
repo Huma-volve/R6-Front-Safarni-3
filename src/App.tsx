@@ -1,12 +1,49 @@
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
-import PageLayout from "./pages/PageLayout";
+import {
+  PageLayout,
+  ErrorPage,
+  HomePage,
+  FavoritePage,
+  ComparePage,
+  MapsPage,
+  SearchPage,
+  FilterPage,
+  WelcomePage,
+} from "./pages";
 
 const router = createBrowserRouter([
+  { path: "welcome", element: <WelcomePage /> },
   {
     path: "/",
     element: <PageLayout />,
-    children: [],
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "",
+        element: <HomePage />,
+      },
+      {
+        path: "favorite",
+        element: <FavoritePage />,
+      },
+      {
+        path: "compare",
+        element: <ComparePage />,
+      },
+      {
+        path: "maps",
+        element: <MapsPage />,
+      },
+      {
+        path: "filter",
+        element: <FilterPage />,
+      },
+      {
+        path: "search",
+        element: <SearchPage />,
+      },
+    ],
   },
 ]);
 
