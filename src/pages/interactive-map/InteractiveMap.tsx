@@ -140,20 +140,19 @@ export default function InteractiveMap() {
           )}
         </div>
 
-        <div className="flex gap-3 justify-center">
+        <div className="flex gap-3 justify-start overflow-x-auto scrollbar-hide md:justify-center">
           {categories.map((cat) => (
             <Button
               key={cat.key}
               onClick={() => setActiveCategory(cat.key)}
               className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-colors cursor-pointer
-    focus:outline-none focus:ring-0
-    active:bg-sky-100 active:text-sky-600
-    ${
-      activeCategory === cat.key
-        ? "bg-sky-100 text-sky-600 border-sky-300"
-        : "bg-white text-gray-700 border-gray-200 hover:bg-gray-100"
-    }
-  `}
+                focus:outline-none focus:ring-0
+                hover:bg-sky-100 hover:text-sky-600
+                ${
+                  activeCategory === cat.key
+                    ? "bg-sky-100 text-sky-600 border-sky-300"
+                    : "bg-white text-gray-700 border-gray-200"
+                }`}
               style={{
                 WebkitTapHighlightColor: "transparent",
                 outline: "none",
@@ -192,3 +191,13 @@ export default function InteractiveMap() {
     </div>
   );
 }
+
+<style jsx global>{`
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+`}</style>;
