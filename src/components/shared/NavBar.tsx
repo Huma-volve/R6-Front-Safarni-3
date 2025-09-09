@@ -1,7 +1,8 @@
 import { Link, NavLink } from "react-router";
-import { Search } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import logoIcon from "@/assets/icons/logo.svg";
+import { useState } from "react";
 
 const navLinks: { name: string; link: string }[] = [
   { name: "Home", link: "/" },
@@ -12,27 +13,45 @@ const navLinks: { name: string; link: string }[] = [
 
 const NavBar = () => {
   const isLoggedIn: boolean = false;
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  function toggleMenuHandler() {
+    setIsNavOpen((prev) => !prev);
+  }
 
   return (
-    <header>
-      <Link to="/">
-        <img src={logoIcon} alt="Safarni logo" />
-        <span>Safarni</span>
+    <header className="flex py-2 lg:my-6 px-4 justify-between m-auto items-center w-full max-w-[1272px] ">
+      <Link className="flex flex-col gap-2 justify-center" to="/">
+        <img className="w-11 m-auto" src={logoIcon} alt="Safarni logo" />
+        <span className="text-blue-700 text-lg font-semibold">Safarni</span>
       </Link>
 
-      <nav>
-        <ul>
+      <nav
+        className={
+          isNavOpen
+            ? "absolute right-0 top-28 translate-x-0 lg:translate-0 transition duration-300 ease-in-out lg:static lg:bg-white bg-gray-50  px-12 py-6 m-auto z-10 rounded-lg lg:p-0"
+            : "translate-x-full right-0 top-28 lg:p-0 transition lg:translate-0 rounded-lg duration-300 ease-in-out absolute lg:static lg:bg-white bg-gray-50 px-12 py-6 z-10"
+        }
+      >
+        <ul className="flex flex-col gap-12 lg:flex-row lg:gap-14 lg:mt-0">
           {navLinks.map((linkObj) => (
-            <li key={linkObj.name}>
-              <NavLink to={linkObj.link}>{linkObj.name}</NavLink>
+            <li key={linkObj.name} className="font-medium text-lg lg:text-2xl">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "text-blue-700" : "text-gray-900"
+                }
+                to={linkObj.link}
+              >
+                {linkObj.name}
+              </NavLink>
             </li>
           ))}
         </ul>
       </nav>
 
-      <div>
+      <div className="flex gap-10 items-center">
         <Link to="/search">
-          <Search />
+          <Search className="h-[30px] w-[30px]" />
         </Link>
         <Link to="/filter">
           <svg
@@ -94,6 +113,14 @@ const NavBar = () => {
           )}
         </Link>
       </div>
+
+      <button className="lg:hidden p-2" onClick={toggleMenuHandler}>
+        {isNavOpen ? (
+          <X className="w-10 h-10" />
+        ) : (
+          <Menu className="w-10 h-10" />
+        )}
+      </button>
     </header>
   );
 };

@@ -3,10 +3,10 @@ import { Outlet } from "react-router";
 
 const PageLayout = () => {
   return (
-    <>
+    <div className="overflow-hidden">
       <NavBar />
       <Outlet />
-    </>
+    </div>
   );
 };
 
