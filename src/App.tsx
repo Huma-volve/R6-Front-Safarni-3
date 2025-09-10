@@ -10,6 +10,9 @@ import {
   SearchPage,
   FilterPage,
   WelcomePage,
+  CheckoutPage,
+  SuccessPage,
+  CheckoutLayout,
 } from "./pages";
 
 const router = createBrowserRouter([
@@ -42,6 +45,20 @@ const router = createBrowserRouter([
       {
         path: "search",
         element: <SearchPage />,
+      },
+      {
+        path: "checkout",
+        element: <CheckoutLayout />,
+        children: [
+          {
+            path: "",
+            element: <CheckoutPage />,
+          },
+          {
+            path: "success",
+            element: <SuccessPage />,
+          },
+        ],
       },
     ],
   },

@@ -1,0 +1,54 @@
+import cardImg from "@/assets/images/cardImg.png";
+import {
+  BankCardForm,
+  PaymentMethodForm,
+  PaypalForm,
+} from "@/components/shared";
+
+import { useState } from "react";
+import paypalIcon from "@/assets/icons/paypal.svg";
+import masterIcon from "@/assets/icons/mastercard.svg";
+import visaIcon from "@/assets/icons/visa.svg";
+
+const paymentOptionsArr = [
+  { label: "Paypal", val: "paypal", icon: paypalIcon },
+  { label: "Mastercard", val: "mastercard", icon: masterIcon },
+  { label: "Visa", val: "visa", icon: visaIcon },
+];
+
+const CheckoutPage = () => {
+  const [formType, setFormType] = useState("");
+
+  let content = (
+    <PaymentMethodForm
+      setFormType={setFormType}
+      paymentOptionsArr={paymentOptionsArr}
+    />
+  );
+  if (formType == "mastercard" || formType == "visa") {
+    content = (
+      <BankCardForm paymentOptionsArr={paymentOptionsArr} cardType={formType} />
+    );
+  } else if (formType == "paypal") {
+    content = <PaypalForm paymentOptionsArr={paymentOptionsArr} />;
+  }
+
+  return (
+    <>
+      <div>
+        <img src={cardImg} alt="A bank card" />
+      </div>
+      <div className="w-full max-w-[510px] mx-auto">
+        <h2 className="font-medium text-[26px] text-gray-900 text-center">
+          Payment Methed
+        </h2>
+        <p className="font-medium text-[22px] mb-6 text-gray-700">
+          Add You Payment Methed
+        </p>
+        {content}
+      </div>
+    </>
+  );
+};
+
+export default CheckoutPage;

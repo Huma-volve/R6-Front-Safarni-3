@@ -1,5 +1,8 @@
 export { default as PageLayout } from "./PageLayout";
 export { default as ErrorPage } from "./ErrorPage";
+export { default as CheckoutLayout } from "./CheckoutLayout";
+export { default as CheckoutPage } from "./CheckoutPage";
+export { default as SuccessPage } from "./SuccessPage";
 export { default as HomePage } from "./home/HomePage";
 export { default as FilterPage } from "./home/FilterPage";
 export { default as SearchPage } from "./home/SearchPage";
