@@ -36,14 +36,19 @@ const PaypalForm = ({
     resolver: zodResolver(formSchema),
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
+      setIsLoading(true);
       console.log(values);
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(values, null, 2)}</code>
         </pre>
       );
+      setIsLoading(false);
     } catch (error) {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");

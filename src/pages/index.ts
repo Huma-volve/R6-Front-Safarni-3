@@ -10,3 +10,4 @@ export { default as FavoritePage } from "./favorite/FavoritePage";
 export { default as ComparePage } from "./compare/ComparePage";
 export { default as MapsPage } from "./interactive-map/MapsPage";
 export { default as WelcomePage } from "./authentication/WelcomePage";
+export { default as DestinationPage } from "./destination/DestinationPage";
