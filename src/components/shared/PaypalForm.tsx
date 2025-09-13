@@ -57,7 +57,7 @@ const PaypalForm = ({
 
   return (
     <>
-      <ul className="flex mb-6 gap-3.5">
+      <ul className="flex mb-6 gap-3.5 flex-col lg:flex-row">
         {paymentOptionsArr.map((obj) => (
           <li
             key={obj.val}

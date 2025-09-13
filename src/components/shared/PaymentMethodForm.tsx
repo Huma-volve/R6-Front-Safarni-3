@@ -55,10 +55,10 @@ export default function PaymentMethodForm({
           render={({ field }) => (
             <FormItem className="space-y-3">
               {/* <FormLabel></FormLabel> */}
-              <FormControl>
+              <FormControl className="flex-col lg:flex-row">
                 <RadioGroup
                   onValueChange={field.onChange}
-                  className="flex mb-6"
+                  className="flex mb-6 "
                 >
                   {paymentOptionsArr.map(({ label, val, icon }) => (
                     <FormItem

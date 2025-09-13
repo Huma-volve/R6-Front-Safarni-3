@@ -36,7 +36,7 @@ const CheckoutPage = () => {
   return (
     <>
       <div>
-        <img src={cardImg} alt="A bank card" />
+        <img src={cardImg} alt="A bank card" className="m-auto" />
       </div>
       <div className="w-full max-w-[510px] mx-auto">
         <h2 className="font-medium text-[26px] text-gray-900 text-center">
