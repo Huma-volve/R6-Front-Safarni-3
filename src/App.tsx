@@ -13,6 +13,7 @@ import {
   CheckoutPage,
   SuccessPage,
   CheckoutLayout,
+  DestinationPage,
 } from "./pages";
 
 const router = createBrowserRouter([
@@ -59,6 +60,14 @@ const router = createBrowserRouter([
             element: <SuccessPage />,
           },
         ],
+      },
+      {
+        path: "tours/:id",
+        element: <DestinationPage />,
+      },
+      {
+        path: "not-found",
+        element: <ErrorPage />,
       },
     ],
   },
