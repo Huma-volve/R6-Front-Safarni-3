@@ -16,7 +16,6 @@ type Tour = {
   guide: string;
   duration: number;
   highlights: string[];
-  // add other fields from the API response
 };
 
 type User = {
