@@ -3,49 +3,59 @@ import { RouterProvider } from "react-router/dom";
 import {
   PageLayout,
   ErrorPage,
-  HomePage,
+  Home,
   FavoritePage,
   ComparePage,
   MapsPage,
-  SearchPage,
-  FilterPage,
-  WelcomePage,
+  Search,
+  Filter,
+  GetStarted,
   CheckoutPage,
   SuccessPage,
   CheckoutLayout,
   DestinationPage,
+  FilterResults,
+  Login,
+  Signup,
+  ForgetPassword,
+  Otp,
+  NewPassword,
+  Done,
 } from "./pages";
+
 import { FlightPage } from "./pages/flight-booking";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
 import AuthLayout from "./pages/authentication/AuthLayout";
-import GetStarted from "./pages/authentication/GetStarted";
-import Login from "./pages/authentication/Login";
-import Signup from "./pages/authentication/Signup";
-import ForgetPassword from "./pages/authentication/ForgetPassword";
-import Otp from "./pages/authentication/Otp";
-import NewPassword from "./pages/authentication/NewPassword";
-import Done from "./pages/authentication/Done";
-import Home from "./pages/home/Home";
 import ProtectedRoute from "./pages/ProtectedRoute";
-import PageLayout from "./pages/PageLayout";
-import Search from "./pages/search/Search";
-import Filter from "./pages/filter/Filter";
-import FilterResults from "./pages/filter/FilterResults";
+
+
 
 const router = createBrowserRouter([
-  { path: "welcome", element: <WelcomePage /> },
-  {
-    path: "/",
-    element: <PageLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "",
-        element: <HomePage />,
-      },
-      {
+    {
+        element: (
+            <ProtectedRoute>
+                <PageLayout />
+            </ProtectedRoute>
+        ),
+        children: [
+            {
+                path: "/home",
+                element: <Home />,
+            },
+            {
+                path: "/search",
+                element: <Search />,
+            },
+            {
+                path: "/filter",
+                element: <Filter />,
+            },
+            {
+                path: "/filter-results",
+                element: <FilterResults />,
+            },
+            {
         path: "favorite",
         element: <FavoritePage />,
       },
@@ -57,14 +67,7 @@ const router = createBrowserRouter([
         path: "maps",
         element: <MapsPage />,
       },
-      {
-        path: "filter",
-        element: <FilterPage />,
-      },
-      {
-        path: "search",
-        element: <SearchPage />,
-      },
+      
       {
         path: "flight",
         element: <FlightPage />,
@@ -91,35 +94,11 @@ const router = createBrowserRouter([
         path: "not-found",
         element: <ErrorPage />,
       },
-    ],
-  },
-    {
-        element: (
-            <ProtectedRoute>
-                <PageLayout />
-            </ProtectedRoute>
-        ),
-        children: [
-            {
-                path: "/home",
-                element: <Home />,
-            },
-            {
-                path: "/search",
-                element: <Search />,
-            },
-            {
-                path: "/filter",
-                element: <Filter />,
-            },
-            {
-                path: "/filter-results",
-                element: <FilterResults />,
-            },
         ],
     },
     {
         element: <AuthLayout />,
+        errorElement: <ErrorPage/>,
         children: [
             { path: "/", element: <GetStarted /> },
             { path: "/login", element: <Login /> },

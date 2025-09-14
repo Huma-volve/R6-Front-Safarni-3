@@ -5,10 +5,10 @@ import logoIcon from "@/assets/icons/logo.svg";
 import { useState } from "react";
 
 const navLinks: { name: string; link: string }[] = [
-  { name: "Home", link: "/" },
-  { name: "Favorite", link: "favorite" },
-  { name: "Compare", link: "compare" },
-  { name: "Maps", link: "maps" },
+  { name: "Home", link: "/home" },
+  { name: "Favorite", link: "/favorite" },
+  { name: "Compare", link: "/compare" },
+  { name: "Maps", link: "/maps" },
 ];
 
 const NavBar = () => {
@@ -21,7 +21,7 @@ const NavBar = () => {
 
   return (
     <header className="flex py-2 lg:my-6 mb-12 px-4 justify-between m-auto items-center w-full max-w-[1272px] ">
-      <Link className="flex flex-col gap-2 justify-center" to="/">
+      <Link className="flex flex-col gap-2 justify-center" to="/home">
         <img className="w-11 m-auto" src={logoIcon} alt="Safarni logo" />
         <span className="text-blue-700 text-lg font-semibold">Safarni</span>
       </Link>
@@ -99,7 +99,7 @@ const NavBar = () => {
             />
           </svg>
         </Link>
-        <Link to={isLoggedIn ? "/profile" : "/welcome"}>
+        <Link to={isLoggedIn ? "/profile" : "/"}>
           {isLoggedIn ? (
             "/profile"
           ) : (
