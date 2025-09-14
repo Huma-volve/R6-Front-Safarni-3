@@ -15,6 +15,7 @@ import {
   CheckoutLayout,
   DestinationPage,
 } from "./pages";
+import { FlightPage } from "./pages/flight-booking";
 
 const router = createBrowserRouter([
   { path: "welcome", element: <WelcomePage /> },
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "search",
         element: <SearchPage />,
+      },
+      {
+        path: "flight",
+        element: <FlightPage />,
       },
       {
         path: "checkout",

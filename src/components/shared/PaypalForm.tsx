@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import userIcon from "@/assets/icons/user.svg";
 import emailIcon from "@/assets/icons/envelope.svg";
+import { useNavigate } from "react-router";
 
 const formSchema = z.object({
   fullname: z.string().min(1).min(2).max(20),
@@ -38,17 +39,12 @@ const PaypalForm = ({
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const navigate = useNavigate();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      setIsLoading(true);
       console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
-      setIsLoading(false);
+      navigate("success");
     } catch (error) {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");
