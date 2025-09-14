@@ -16,7 +16,7 @@ function AppButton({
 }: AppButtonProps) {
     return (
         <Button
-            className={`border-blue-700 w-full cursor-pointer ${
+            className={`border-blue-700 w-full cursor-pointer text-base ${
                 props.variant === "outline"
                     ? "hover:text-blue-800 text-blue-700"
                     : "hover:bg-blue-800 bg-blue-700"

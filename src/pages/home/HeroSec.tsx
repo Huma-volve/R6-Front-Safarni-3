@@ -9,7 +9,7 @@ import HeroImg from "./components/HeroImg";
 
 function HeroSec() {
     return (
-        <>
+        <div>
             <section className="max-h-80 overflow-hidden rounded-md">
                 <img
                     src={heroImgMobile}
@@ -66,7 +66,7 @@ function HeroSec() {
                     />
                 </div>
             </section>
-        </>
+        </div>
     );
 }
 

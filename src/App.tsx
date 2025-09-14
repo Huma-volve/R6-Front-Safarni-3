@@ -1,26 +1,26 @@
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import {
-  PageLayout,
-  ErrorPage,
-  Home,
-  FavoritePage,
-  ComparePage,
-  MapsPage,
-  Search,
-  Filter,
-  GetStarted,
-  CheckoutPage,
-  SuccessPage,
-  CheckoutLayout,
-  DestinationPage,
-  FilterResults,
-  Login,
-  Signup,
-  ForgetPassword,
-  Otp,
-  NewPassword,
-  Done,
+    PageLayout,
+    ErrorPage,
+    Home,
+    FavoritePage,
+    ComparePage,
+    MapsPage,
+    Search,
+    Filter,
+    GetStarted,
+    CheckoutPage,
+    SuccessPage,
+    CheckoutLayout,
+    DestinationPage,
+    FilterResults,
+    Login,
+    Signup,
+    ForgetPassword,
+    Otp,
+    NewPassword,
+    Done,
 } from "./pages";
 
 import { FlightPage } from "./pages/flight-booking";
@@ -28,8 +28,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthLayout from "./pages/authentication/AuthLayout";
 import ProtectedRoute from "./pages/ProtectedRoute";
-
-
 
 const router = createBrowserRouter([
     {
@@ -56,49 +54,49 @@ const router = createBrowserRouter([
                 element: <FilterResults />,
             },
             {
-        path: "favorite",
-        element: <FavoritePage />,
-      },
-      {
-        path: "compare",
-        element: <ComparePage />,
-      },
-      {
-        path: "maps",
-        element: <MapsPage />,
-      },
-      
-      {
-        path: "flight",
-        element: <FlightPage />,
-      },
-      {
-        path: "checkout",
-        element: <CheckoutLayout />,
-        children: [
-          {
-            path: "",
-            element: <CheckoutPage />,
-          },
-          {
-            path: "success",
-            element: <SuccessPage />,
-          },
-        ],
-      },
-      {
-        path: "tours/:id",
-        element: <DestinationPage />,
-      },
-      {
-        path: "not-found",
-        element: <ErrorPage />,
-      },
+                path: "favorite",
+                element: <FavoritePage />,
+            },
+            {
+                path: "compare",
+                element: <ComparePage />,
+            },
+            {
+                path: "maps",
+                element: <MapsPage />,
+            },
+
+            {
+                path: "flight",
+                element: <FlightPage />,
+            },
+            {
+                path: "checkout",
+                element: <CheckoutLayout />,
+                children: [
+                    {
+                        path: "",
+                        element: <CheckoutPage />,
+                    },
+                    {
+                        path: "success",
+                        element: <SuccessPage />,
+                    },
+                ],
+            },
+            {
+                path: "tours/:id",
+                element: <DestinationPage />,
+            },
+            {
+                path: "not-found",
+                element: <ErrorPage />,
+            },
         ],
     },
     {
         element: <AuthLayout />,
-        errorElement: <ErrorPage/>,
+        errorElement: <ErrorPage />,
         children: [
             { path: "/", element: <GetStarted /> },
             { path: "/login", element: <Login /> },

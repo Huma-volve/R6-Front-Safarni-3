@@ -34,7 +34,7 @@ function PagePagination({ numPages, currentPage, links }: PagePaginationProps) {
         .join("&")}`;
 
     return (
-        <Pagination>
+        <Pagination className="mt-6 text-base font-medium">
             <PaginationContent>
                 {currentPage > 1 && (
                     <PaginationItem>
@@ -43,6 +43,7 @@ function PagePagination({ numPages, currentPage, links }: PagePaginationProps) {
                                 links.prev,
                                 "page"
                             )}`}
+                            className="text-base font-medium"
                         />
                     </PaginationItem>
                 )}
@@ -52,6 +53,7 @@ function PagePagination({ numPages, currentPage, links }: PagePaginationProps) {
                         <PaginationLink
                             to={`${url}&page=${i + 1}`}
                             isActive={currentPage === i + 1}
+                            className="text-base font-light"
                         >
                             {i + 1}
                         </PaginationLink>
@@ -65,6 +67,7 @@ function PagePagination({ numPages, currentPage, links }: PagePaginationProps) {
                                 links.next,
                                 "page"
                             )}`}
+                            className="text-base font-medium"
                         />
                     </PaginationItem>
                 )}
