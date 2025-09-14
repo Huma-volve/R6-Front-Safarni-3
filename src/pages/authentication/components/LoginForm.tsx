@@ -4,14 +4,15 @@ import { z } from "zod";
 import { Link, useNavigate } from "react-router";
 import { Mail, Lock } from "lucide-react";
 import { useState } from "react";
+import axios from "axios";
 
 import { Form } from "@/components/ui/form";
 import FormInput from "./FormInput";
-import AppButton from "./AppButton";
+import AppButton from "../../../components/shared/AppButton";
 import { login } from "@/lib/api/api";
 import { useAuthContext } from "@/context/AuthContext";
 import { loginValidationSchema } from "@/lib/validation";
-import ErrorMsg from "./ErrorMsg";
+import ErrorMsg from "../../../components/shared/ErrorMsg";
 
 function LoginForm() {
     const { setToken, setUser } = useAuthContext();
@@ -22,7 +23,7 @@ function LoginForm() {
         resolver: zodResolver(loginValidationSchema),
         defaultValues: {
             email: "hagar2@dev.com",
-            password: "123456789",
+            password: "12345678",
         },
     });
 
@@ -40,8 +41,10 @@ function LoginForm() {
             setToken(token);
             form.reset();
             navigate("/home");
-        } catch (error: any) {
-            setError(error.response?.data?.message);
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error))
+                setError(error.response?.data?.message);
+            else setError("An unexpected error occurred. Cannot login");
         }
     }
 
@@ -56,17 +59,19 @@ function LoginForm() {
                 <FormInput
                     form={form}
                     fieldName="email"
+                    Icon={Mail}
                     label="Email"
                     placeholder="kneeDue@untitledui.com"
-                    Icon={Mail}
+                    type="email"
                 />
 
                 <FormInput
                     form={form}
                     fieldName="password"
+                    Icon={Lock}
                     label="Password"
                     placeholder="***********"
-                    Icon={Lock}
+                    type="password"
                 />
 
                 <Link
@@ -77,7 +82,6 @@ function LoginForm() {
                 </Link>
 
                 <AppButton
-                    className="bg-blue-700"
                     type="submit"
                     isSubmitting={form.formState.isSubmitting}
                 >

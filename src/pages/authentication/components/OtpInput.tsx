@@ -3,6 +3,8 @@ import {
     InputOTPGroup,
     InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { OTP_LENGTH } from "@/constants";
+import type { ControllerRenderProps } from "react-hook-form";
 
 type OtpSlotProps = {
     index: number;
@@ -16,14 +18,21 @@ function OtpSlot({ index }: OtpSlotProps) {
     );
 }
 
-export function OtpInput() {
+type OtpInputProps = {
+    field: ControllerRenderProps<
+        {
+            otp: string;
+        },
+        "otp"
+    >;
+};
+
+export function OtpInput({ field }: OtpInputProps) {
     return (
-        <InputOTP maxLength={5}>
-            <OtpSlot index={0} />
-            <OtpSlot index={1} />
-            <OtpSlot index={2} />
-            <OtpSlot index={3} />
-            <OtpSlot index={4} />
+        <InputOTP maxLength={OTP_LENGTH} {...field}>
+            {Array.from({ length: OTP_LENGTH }, (_, i) => (
+                <OtpSlot index={i} key={i} />
+            ))}
         </InputOTP>
     );
 }

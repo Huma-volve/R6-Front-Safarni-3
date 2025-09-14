@@ -4,15 +4,16 @@ import { z } from "zod";
 import { useNavigate } from "react-router";
 import { Mail, Lock, UserRound } from "lucide-react";
 import { useState } from "react";
+import axios from "axios";
 
 import { Form } from "@/components/ui/form";
 import { signupValidationSchema } from "@/lib/validation";
 import FormInput from "./FormInput";
 import PasswordGuide from "./PasswordGuide";
-import AppButton from "./AppButton";
+import AppButton from "../../../components/shared/AppButton";
 import { createNewUser } from "@/lib/api/api";
 import { useAuthContext } from "@/context/AuthContext";
-import ErrorMsg from "./ErrorMsg";
+import ErrorMsg from "../../../components/shared/ErrorMsg";
 
 function SignupForm() {
     const { setToken } = useAuthContext();
@@ -33,7 +34,6 @@ function SignupForm() {
             const result = await createNewUser(values);
 
             const { token } = result.data;
-
             if (!token) {
                 setError(result.message || "Sign up failed");
             }
@@ -41,10 +41,15 @@ function SignupForm() {
             form.reset();
             setToken(token);
             navigate("/home");
-        } catch (error: any) {
-            const { email: emailError } = error.response.data.data;
-            if (emailError.length > 0) setError(emailError[0]);
-            else setError(error.response?.data?.message);
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                console.log(error);
+                const emailError = error.response?.data?.data?.email;
+                if (emailError.length > 0) setError(emailError[0]);
+                else setError(error.response?.data?.message);
+            } else {
+                setError("An unexpected error occurred. Cannot signup");
+            }
         }
     }
 
@@ -59,25 +64,27 @@ function SignupForm() {
                 <FormInput
                     form={form}
                     fieldName="name"
+                    Icon={UserRound}
                     label="Name"
                     placeholder="kneeDue"
-                    Icon={UserRound}
                 />
 
                 <FormInput
                     form={form}
                     fieldName="email"
+                    Icon={Mail}
                     label="Email"
                     placeholder="kneeDue@untitledui.com"
-                    Icon={Mail}
+                    type="email"
                 />
 
                 <FormInput
                     form={form}
                     fieldName="password"
+                    Icon={Lock}
                     label="Password"
                     placeholder="***********"
-                    Icon={Lock}
+                    type="password"
                 />
                 <div className="my-2">
                     <PasswordGuide>must be at least 8 characters</PasswordGuide>
@@ -87,7 +94,6 @@ function SignupForm() {
                 </div>
 
                 <AppButton
-                    className="bg-blue-700"
                     type="submit"
                     isSubmitting={form.formState.isSubmitting}
                 >
