@@ -8,7 +8,7 @@ import type { FavoriteContextType, FavoriteProviderProps } from '@/types';
 
 
 const url = 'https://round5-safarnia.huma-volve.com/api';
-const token = `Bearer 98|mkI1jzh8xwq6PySoa4RPE66HCCgDSNlY89IiZxvE692c509f`;
+const token = `Bearer wOe8RL3p0vnZhTg9nRBeojpI8X5K0ZX7Jpn412rM6356533b`;
 
 
 
@@ -24,6 +24,8 @@ export const FavoriteContext = createContext<FavoriteContextType>({
 export default function FavoriteContextProvider({ children }: FavoriteProviderProps) {
   const [favorites, setFavorite] = useState<Favorite[]>([]);
 
+
+  
   async function getFavorites(): Promise<AxiosResponse<any> | void> {
     try {
       const response = await axios.get(`${url}/favorites`, {
@@ -34,7 +36,7 @@ export default function FavoriteContextProvider({ children }: FavoriteProviderPr
       setFavorite(response.data.data);
       return response;
     } catch (error) {
-      console.error(error);
+      return error
     }
   }
 
@@ -50,7 +52,6 @@ export default function FavoriteContextProvider({ children }: FavoriteProviderPr
         icon: <SquareCheckBig size={24} className="text-green-400" />,
       });
     } catch (error: any) {
-      console.error(error);
       toast(error?.response?.data?.message || 'Something went wrong', {
         icon: <X size={24} className="text-red-400" />,
       });
@@ -64,8 +65,6 @@ export default function FavoriteContextProvider({ children }: FavoriteProviderPr
           Authorization: token,
         },
       });
-
-      setFavorite(response.data.data);
       toast(response.data.message, {
         icon: <SquareCheckBig size={24} className="text-green-400" />,
       });

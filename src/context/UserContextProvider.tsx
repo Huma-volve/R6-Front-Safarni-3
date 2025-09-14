@@ -5,7 +5,7 @@ import { SquareCheckBig, X } from 'lucide-react';
 import type { IUserContext, IUserInfo, IUserUpdateData } from '@/types'; 
 
 const url = 'https://round5-safarnia.huma-volve.com/api';
-const token = `Bearer 98|mkI1jzh8xwq6PySoa4RPE66HCCgDSNlY89IiZxvE692c509f`;
+const token = `Bearer 228|r8QzkmooxxQVR8XVyc0WesaNQLcx099bqA6BPOdu43d3584d`;
 
 
 export const UserContext = createContext<IUserContext>({
@@ -23,11 +23,8 @@ interface UserContextProviderProps {
 export default function UserContextProvider({ children }: UserContextProviderProps) {
   const [userInfo, setUserInfo] = useState<IUserInfo | null>(null);
 
-  useEffect(() => {
-    getUserInfo();
-  }, []);
 
-  async function getUserInfo(): Promise<void> {
+  async function getUserInfo():  Promise<AxiosResponse<any> | void>{
     try {
       const response = await axios.get<{ data: IUserInfo }>(`${url}/profile`, {
         headers: {
@@ -35,8 +32,9 @@ export default function UserContextProvider({ children }: UserContextProviderPro
         },
       });
       setUserInfo(response.data.data);
+      return response
     } catch (error: any) {
-      console.error("Failed to fetch user info:", error?.response?.data?.message);
+      return error
     }
   }
 
@@ -65,13 +63,15 @@ export default function UserContextProvider({ children }: UserContextProviderPro
           Authorization: token,
         },
       });
-      toast("Deleted successfully", {
+      toast(response.data.message, {
         icon: <SquareCheckBig size={24} className="text-green-400" />,
       });
+      return response
     } catch (error: any) {
       toast(error?.response?.data?.message || "Failed to delete account", {
         icon: <X size={24} className="text-red-400" />,
       });
+      return error
     }
   }
 
@@ -154,6 +154,50 @@ export default function UserContextProvider({ children }: UserContextProviderPro
   }
 
 
+
+    async function getAllTour(): Promise<AxiosResponse<any> | void>  {
+    try {
+      const response = await axios.get(`${url}/tours`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      return response
+    } catch (error) {
+      return error
+    }
+  }
+
+
+
+//   async function getTours(filter?: IFilterTour) {
+//     try {
+//         const params =
+//             filter &&
+//             Object.entries(filter)
+//                 .filter((param) => {
+//                     if (
+//                         param[1] !== undefined &&
+//                         param[1] !== "" &&
+//                         param[1] !== "[]"
+//                     )
+//                         return param;
+//                 })
+//                 .map((param) => ${param[0]}=${param[1]});
+
+//         let url = ${safarni}/tours;
+//         if (params) url += ?${params.join("&")};
+
+//         const res = await axios.get(url);
+
+//         return res.data;
+//     } catch (error) {
+//         console.log(error);
+//         throw error;
+//     }
+// }
+
+
   return (
     <UserContext.Provider
       value={{
@@ -166,6 +210,7 @@ export default function UserContextProvider({ children }: UserContextProviderPro
         getMyTourBookings,
         getMyRoomBookings,
         getTourDetails,
+        getAllTour,
       }}
     >
       {children}

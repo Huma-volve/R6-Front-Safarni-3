@@ -7,9 +7,8 @@ import { Link } from 'react-router';
 import { ChevronLeft } from 'lucide-react';
 
 export default function Favorite() {
-  const [favList, setFavList] = useState<ITour[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { getFavorites } = useContext(FavoriteContext);
+  const { getFavorites ,favorites} = useContext(FavoriteContext);
 
   useEffect(() => {
     getFavList();
@@ -17,23 +16,14 @@ export default function Favorite() {
 
   async function getFavList(): Promise<void> {
     setIsLoading(true);
-    try {
-      const response = await getFavorites();
-      if (response && response.data && response.data.data) {
-        setFavList(response.data.data);
-        console.log(response);
-      }
-    } catch (error) {
-      console.error('Error fetching favorites:', error);
-    } finally {
-      setIsLoading(false);
-    }
+    await getFavorites()
+    setIsLoading(false);
   }
 
   return (
     <>
 
-    <div className="container lg:w-[90%] mx-auto">
+    <div className="container mx-auto px-3 lg:px-20">
       <div className="flex justify-between items-center">
         <Link to='/'>
         <div className="w-14 h-14 bg-gray-100 rounded-full my-10 flex justify-center items-center"><ChevronLeft/></div>
@@ -41,7 +31,7 @@ export default function Favorite() {
         <h1 className='font-medium text-xl'>Favorite</h1>
         <span></span>
       </div>
-      {!favList.length && !isLoading && (
+      {!favorites?.length && !isLoading && (
         <div className="text-center p-10 text-red-400 font-medium">
           Not added to your favorites yet
         </div>
@@ -51,7 +41,7 @@ export default function Favorite() {
         <Loader />
       ) : (
           <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5">
-            {favList.map((tour: ITour) => (
+            {favorites?.map((tour: ITour) => (
               <TourCard key={tour.id} tour={tour} />
             ))}
           </div>

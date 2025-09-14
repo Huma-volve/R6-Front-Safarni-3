@@ -12,15 +12,25 @@ import {
 } from "@/components/ui/alert-dialog"
 import { useContext } from "react"
 import { UserContext } from "@/context/UserContextProvider"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 
 
 export default function UserAccount() {
 
   const {deleteAccount}=useContext(UserContext)
+
+  const navigate=useNavigate()
+
+  async function deleteUserAccount() {
+     let response= await deleteAccount()   
+     if(response?.data.status){
+         navigate("/")
+     }
+  }
+
   return (
   <AlertDialog>
-     <div className="container mx-auto w-[70%]">
+     <div className="container mx-auto px-3 lg:px-20">
       <Link to='/profile'>
         <div className="w-14 h-14 bg-gray-100 rounded-full my-10 flex justify-center items-center"><ChevronLeft/></div>
       </Link>
@@ -72,7 +82,7 @@ export default function UserAccount() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-500 hover:bg-red-700" onClick={()=>deleteAccount()}>Delete Account</AlertDialogAction>
+          <AlertDialogAction className="bg-red-500 hover:bg-red-700" onClick={()=>deleteUserAccount()}>Delete Account</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

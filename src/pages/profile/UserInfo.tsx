@@ -37,7 +37,7 @@ export default function UserInfo() {
   };
 
   return (
-    <div className="container mx-auto w-[70%]">
+    <div className="container mx-auto px-3 lg:px-20">
       <Link to='/profile'>
         <div className="w-14 h-14 bg-gray-100 rounded-full my-10 flex justify-center items-center"><ChevronLeft/></div>
       </Link>

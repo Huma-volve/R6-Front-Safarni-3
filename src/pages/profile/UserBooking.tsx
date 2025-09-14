@@ -5,11 +5,11 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import tourImg from "../../assets/images/arcticons_kerala-tourism.png";
-import { Bed, Car, ChevronLeft, Plane } from "lucide-react";
+import { Bed, Car, ChevronLeft, Plane,Star } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/context/UserContextProvider";
 import { Link } from "react-router";
-import type { CarBooking, FlightBooking, RoomBooking, TourBooking, TourImageMap } from "@/types";
+import type {CarBooking, FlightBooking, RoomBooking, TourBooking, TourImageMap } from "@/types";
 
 
 export default function UserBooking() {
@@ -19,13 +19,14 @@ export default function UserBooking() {
     getMyTourBookings,
     getMyRoomBookings,
     getTourDetails,
+    getAllTour,
   } = useContext(UserContext);
 
   const [flightBooking, setFlightBooking] = useState<FlightBooking[]>([]);
   const [carBooking, setCarBooking] = useState<CarBooking[]>([]);
   const [tourBooking, setTourBooking] = useState<TourBooking[]>([]);
   const [roomBooking, setRoomBooking] = useState<RoomBooking[]>([]);
-  const [tourImages, setTourImages] = useState<TourImageMap>({});
+  const [filteredTours, setFilteredTours] = useState<TourImageMap>([]);
 
   useEffect(() => {
     (async () => {
@@ -34,6 +35,13 @@ export default function UserBooking() {
     })();
     getAllUserBooking();
   }, []);
+
+
+  useEffect(()=>{
+    if(tourBooking.length>0){
+          filterTour()
+    }
+  },[tourBooking])
 
   async function getAllUserBooking() {
     const response1 = await getMyCarBookings();
@@ -45,25 +53,21 @@ export default function UserBooking() {
 
     const response3 = await getMyRoomBookings();
     setRoomBooking(response3?.data.data || []);
-
-    // Fetch images for each tour in parallel
-    const images = tours.map(async (booking) => {
-      const res = await getTourDetails(booking.tour_id);
-      return { id: booking.tour_id, image: res.data.data.image };
-    });
-
-    const resolvedImages = await Promise.all(images);
-
-    const imageMap: TourImageMap = {};
-    resolvedImages.forEach((item) => {
-      imageMap[item.id] = item.image;
-    });
-
-    setTourImages(imageMap);
   }
 
+
+  async function filterTour(){
+   let response= await  getAllTour()
+   let tours =response?.data.data
+   let filtered=tourBooking.map((booking)=>(
+       tours.find((tour)=>(tour.id === booking.tour_id))
+   ))
+   setFilteredTours(filtered)
+  }
+
+
   return (
-    <div className="container mx-auto w-[70%]">
+    <div className="container mx-auto px-3 lg:px-20">
       <Link to="/profile">
         <div className="w-14 h-14 bg-gray-100 rounded-full my-10 flex justify-center items-center">
           <ChevronLeft />
@@ -103,7 +107,7 @@ export default function UserBooking() {
             {/* FLIGHT */}
             <TabsContent value="flight">
               {!flightBooking.length && (
-                <div className="text-red-400">No reservation</div>
+                <div><p className="text-red-400 text-center">No reservation</p></div>
               )}
               {flightBooking.map((booking) => (
                 <div key={booking.id} className="py-4">
@@ -125,7 +129,7 @@ export default function UserBooking() {
             {/* CARS */}
             <TabsContent value="cars">
               {!carBooking.length && (
-                <div className="text-red-400">No reservation</div>
+                <div><p className="text-red-400 text-center">No reservation</p></div>
               )}
               {carBooking.map((booking) => (
                 <div key={booking.id} className="py-4">
@@ -136,7 +140,7 @@ export default function UserBooking() {
                     <img
                       src={booking.car.category.image_url}
                       alt="car"
-                      className="w-24 h-16 object-cover"
+                      className="w-40  object-cover"
                     />
                   </div>
                   <div className="flex justify-between text-gray-500 py-4">
@@ -151,33 +155,28 @@ export default function UserBooking() {
             {/* TOURS */}
             <TabsContent value="tours">
               {!tourBooking.length && (
-                <div className="text-red-400">No reservation</div>
+                <div><p className="text-red-400 text-center">No reservation</p></div>
               )}
-              {tourBooking.map((booking) => (
-                <div key={booking.id} className="flex gap-4 items-center mb-6">
+              {filteredTours?.map((booking) => (
+                <div key={booking.id} className="flex gap-4 items-center justify-between mb-6">
                   <div className="w-40">
-                    {tourImages[booking.tour_id] ? (
-                      <img
-                        src={tourImages[booking.tour_id]}
-                        alt={booking.tour_title}
-                        className="rounded-md w-full object-cover"
-                      />
-                    ) : (
-                      <div className="text-gray-400 text-sm">Image not available</div>
-                    )}
+                    <img src={booking?.image} alt={booking?.tour_title} className="rounded-md" />
                   </div>
                   <div>
                     <span className="text-gray-500 font-semibold">
                       Full Day Tour
                     </span>
-                    <p className="text-lg font-medium py-2">{booking.tour_title}</p>
+                    <p className="text-lg font-medium py-2">{booking.title}</p>
                     <p className="text-gray-500 font-semibold">
                       From{" "}
                       <span className="text-blue-500">
-                        {booking.total_price / booking.seats_count} $
+                        {booking.price} $
                       </span>{" "}
                       Per Person
                     </p>
+                  </div>
+                  <div className="">
+                    <span><Star className="fill-amber-200 stroke-amber-200 inline pr-2"/>{booking.rating}</span>
                   </div>
                 </div>
               ))}
@@ -186,7 +185,7 @@ export default function UserBooking() {
             {/* HOTELS */}
             <TabsContent value="hotel">
               {!roomBooking.length && (
-                <div className="text-red-400">No reservation</div>
+                <div><p className="text-red-400 text-center">No reservation</p></div>
               )}
               {roomBooking.map((booking) => (
                 <div key={booking.id} className="mb-4">
@@ -211,4 +210,3 @@ export default function UserBooking() {
     </div>
   );
 }
-

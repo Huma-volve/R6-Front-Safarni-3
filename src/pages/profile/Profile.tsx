@@ -21,50 +21,69 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { UserContext } from "@/context/UserContextProvider";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-
-
+import Loader from "@/components/shared/Loader";
 
 export default function Profile() {
-
-
-  const {userInfo ,UpdateUserInfo} = useContext(UserContext);
-  const [selectedImage, setSelectedImage] = useState(userInfo?.user.image);
+  const { getUserInfo, UpdateUserInfo } = useContext(UserContext);
+  const [userInfo, setUserInfo] = useState<any>(null);
+  const [selectedImage, setSelectedImage] = useState<string>("");
   const [open, setOpen] = useState(false);
-  const navigate=useNavigate()
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  async function getUserData() {
+    setIsLoading(true);
+    try {
+      const response = await getUserInfo();
+      setUserInfo(response?.data.data);
+      setSelectedImage(response?.data.data.user?.image);
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
-      setSelectedImage(URL.createObjectURL(file)); // Temporary preview
+      setSelectedImage(URL.createObjectURL(file)); // Preview
     }
   };
 
   const handleSaveImage = async () => {
-    const input = document.querySelector('input[type="file"]');
-    const file = input?.files[0];
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
+    const file = input?.files?.[0];
     if (file) {
       const formData = new FormData();
-      formData.append('image', file);
-        UpdateUserInfo(formData)
-    } 
-     setOpen(false); // Close the drawer
+      formData.append("image", file);
+      await UpdateUserInfo(formData);
+      getUserData(); // Refresh user info
+    }
+    setOpen(false);
+  };
+
+  function logout() {
+    navigate("/");
   }
 
-  function logout(){
-   navigate("/")
-  }
-  
+  if (isLoading) return <Loader/>;
+
   return (
-    <div className="w-[70%] mx-auto">
+    <div className="container mx-auto px-3 lg:px-20">
+      {/* Profile Header */}
       <div className="border-gradient p-[1px] rounded-[12px] mb-8">
         <div className="bg-white p-3 rounded-[12px] flex gap-8 items-center">
           <div>
             <div className="relative border-gradient rounded-full p-[2px] w-30 h-30">
               <img
-                src={userInfo?.user.image || userVector}
+                src={selectedImage || userVector}
                 alt="user image"
                 className="w-full h-full rounded-full"
               />
@@ -108,16 +127,17 @@ export default function Profile() {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <p className="font-semibold text-gray-600 text-2xl font-inter capitalize">
-              {userInfo?.user.name || "User Name"}
+            <p className="font-semibold text-gray-600 text-2xl capitalize">
+              {userInfo?.user?.name || "User Name"}
             </p>
-            <p className="font-medium text-xl text-[#6B6E80]">
-              {userInfo?.user.email || "user@example.com"}
+            <p className="font-medium text-xl text-wrap text-[#6B6E80]">
+              {userInfo?.user?.email || "user@example.com"}
             </p>
           </div>
         </div>
       </div>
 
+      {/* Profile Actions */}
       <div className="border-gradient p-[1px] rounded-[12px]">
         <div className="bg-white p-5 rounded-[12px] flex flex-col gap-6">
           <Link to="/userInfo" className="flex w-full justify-between rounded-md p-5 shadow-custom">
@@ -164,7 +184,7 @@ export default function Profile() {
               <AlertDialogFooter>
                 <AlertDialogAction
                   className="bg-blue-700 hover:bg-blue-800 w-1/2"
-                  onClick={() => logout()}
+                  onClick={logout}
                 >
                   Yes, Log Me Out
                 </AlertDialogAction>
