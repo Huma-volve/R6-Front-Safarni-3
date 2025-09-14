@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router";
 
 import Logo from "./components/Logo";
-import GoBackButton from "./components/GoBackButton";
+import GoBackButton from "../../components/shared/GoBackButton";
 import { useAuthContext } from "@/context/AuthContext";
 
 function AuthLayout() {

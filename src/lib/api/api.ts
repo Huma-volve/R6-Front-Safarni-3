@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import type { INewUser, IUserCredentials } from "@/types";
+import type { IFilterTour, INewUser, IUserCredentials } from "@/types";
 
 const safarni = "http://round5-safarnia.huma-volve.com/api";
 
@@ -74,7 +74,8 @@ export async function sendOTP(otp: string, email: string) {
 
 export async function resetPassword(
     newPassword: string,
-    passwordConfirmation: string
+    passwordConfirmation: string,
+    token: string
 ) {
     try {
         const res = await axios.post(
@@ -85,6 +86,7 @@ export async function resetPassword(
             },
             {
                 headers: {
+                    Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
             }
@@ -97,6 +99,66 @@ export async function resetPassword(
     }
 }
 
-export async function logout() {
-    localStorage.removeItem("token");
+export async function getHomePageData() {
+    try {
+        const res = await axios.get(`${safarni}/home-page`);
+
+        return res.data.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+export async function getRecommendedTours() {
+    try {
+        const res = await axios.get(`${safarni}/recommendedtour`);
+
+        return res.data.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+export async function getTours(filter: IFilterTour) {
+    try {
+        const params = Object.entries(filter)
+            .filter((param) => {
+                if (
+                    param[1] !== undefined &&
+                    param[1] !== "" &&
+                    param[1] !== "[]"
+                )
+                    return param;
+            })
+            .map((param) => `${param[0]}=${param[1]}`);
+
+        const res = await axios.get(`${safarni}/tours?${params.join("&")}`);
+
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+export async function getTrendingTours() {
+    try {
+        const res = await axios.get(`${safarni}/trending-tours`);
+        return res.data.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+export async function getSearchLocations(key: string) {
+    try {
+        const res = await axios.get(`${safarni}/locations?key=${key}`);
+        return res.data.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 }

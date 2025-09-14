@@ -4,12 +4,14 @@ import { z } from "zod";
 import { Mail } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import axios from "axios";
 
 import { Form } from "@/components/ui/form";
 import { forgetPasswordValidationSchema } from "@/lib/validation";
 import FormInput from "./FormInput";
-import AppButton from "./AppButton";
+import AppButton from "../../../components/shared/AppButton";
 import { forgetPassword } from "@/lib/api/api";
+import ErrorMsg from "../../../components/shared/ErrorMsg";
 
 function ForgetPasswordForm() {
     const navigate = useNavigate();
@@ -18,7 +20,7 @@ function ForgetPasswordForm() {
     const form = useForm<z.infer<typeof forgetPasswordValidationSchema>>({
         resolver: zodResolver(forgetPasswordValidationSchema),
         defaultValues: {
-            email: "",
+            email: "hagar2@dev.com",
         },
     });
 
@@ -30,9 +32,11 @@ function ForgetPasswordForm() {
 
             form.reset();
             sessionStorage.setItem("otpAllowed", "true");
-            navigate("/otp");
-        } catch (error: any) {
-            setError(error.response?.data?.message);
+            navigate("/otp", { state: { email: values.email } });
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error))
+                setError(error.response?.data?.message);
+            else setError("An unexpected error occurred.");
         }
     }
 
@@ -42,17 +46,19 @@ function ForgetPasswordForm() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6 w-full"
             >
+                {error && <ErrorMsg msg={error} />}
+
                 <FormInput
                     form={form}
                     fieldName="email"
+                    Icon={Mail}
                     label="Email"
                     placeholder="kneeDue@untitledui.com"
-                    Icon={Mail}
+                    type="email"
                 />
 
                 <AppButton
                     type="submit"
-                    className="bg-blue-700"
                     isSubmitting={form.formState.isSubmitting}
                 >
                     Reset Password

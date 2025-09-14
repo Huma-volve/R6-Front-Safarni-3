@@ -5,7 +5,7 @@ import doneImg from "@/assets/images/done.png";
 import ImageSec from "./components/ImageSec";
 import ContentSecContainer from "./components/ContentSecContainer";
 import PageTitle from "./components/PageTitle";
-import AppButton from "./components/AppButton";
+import AppButton from "../../components/shared/AppButton";
 
 function Done() {
     return (
@@ -19,7 +19,7 @@ function Done() {
                     iconStyle="text-white bg-[#31C48D] rounded-full p-2 w-12 h-12"
                 />
                 <Link to="/login" className="w-full">
-                    <AppButton className="bg-blue-700">Log In</AppButton>
+                    <AppButton>Log In</AppButton>
                 </Link>
             </ContentSecContainer>
         </>
