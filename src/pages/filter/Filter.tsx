@@ -29,15 +29,10 @@ function Filter() {
     });
 
     function onSubmit(values: z.infer<typeof filterValidationSchema>) {
-        const { sortBy, priceRange, adventureStyle, search, minRating } =
-            values;
+        const { sortBy, priceRange, search, minRating } = values;
 
         navigate(
-            `/filter-results?sort_by=${sortBy}&min_price=${
-                priceRange[0]
-            }&max_price=${priceRange[1]}&adventure_style=${JSON.stringify(
-                adventureStyle
-            )}&search=${search}&min_rating=${minRating}&per_page=${RESULTS_PER_PAGE}&page=1`
+            `/filter-results?sort_by=${sortBy}&min_price=${priceRange[0]}&max_price=${priceRange[1]}&search=${search}&min_rating=${minRating}&per_page=${RESULTS_PER_PAGE}&page=1`
         );
     }
 

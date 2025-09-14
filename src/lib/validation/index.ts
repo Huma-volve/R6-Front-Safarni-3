@@ -36,11 +36,11 @@ export const searchValidationSchema = z.object({
 
 export const filterValidationSchema = z.object({
     sortBy: z.enum([
-        "lowToHigh",
-        "highToLow",
-        "biggestDeals",
-        "mostReviewed",
-        "mostPopular",
+        "price&sort_order=asc",
+        "price",
+        "price&sort_order=desc",
+        "rating&sort_order=desc",
+        "views&sort_order=desc",
         "",
     ]),
     priceRange: z.tuple([z.number(), z.number()]),

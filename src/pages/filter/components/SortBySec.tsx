@@ -15,27 +15,33 @@ type ISortBy = {
         | "mostReviewed"
         | "mostPopular";
     label: string;
+    value: string;
 };
 
 const items: ISortBy[] = [
     {
         id: "lowToHigh",
+        value: "price&sort_order=asc",
         label: "Price (Low to High)",
     },
     {
         id: "highToLow",
+        value: "price&sort_order=desc",
         label: "Price (High to Low)",
     },
     {
         id: "biggestDeals",
+        value: "price",
         label: "Biggest Deals (Highest Saving)",
     },
     {
         id: "mostReviewed",
+        value: "rating&sort_order=desc",
         label: "Most Reviewed",
     },
     {
         id: "mostPopular",
+        value: "views&sort_order=desc",
         label: "Most Popular",
     },
 ] as const;
@@ -66,12 +72,14 @@ function SortBySec({ form }: SortBySecProps) {
                                     >
                                         <FormControl>
                                             <RadioGroupItem
-                                                value={item.id}
+                                                value={item.value}
                                                 className="hidden"
                                             />
                                         </FormControl>
                                         <PillLabel
-                                            isSelected={field.value === item.id}
+                                            isSelected={
+                                                field.value === item.value
+                                            }
                                         >
                                             {item.label}
                                         </PillLabel>

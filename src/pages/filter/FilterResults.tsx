@@ -14,7 +14,6 @@ function FilterResults() {
                   ...params,
                   min_price: +params.min_price,
                   max_price: +params.max_price,
-                  // adventure_style: JSON.parse(params.adventure_style),
                   min_rating: +params.min_rating,
               }
             : undefined;
