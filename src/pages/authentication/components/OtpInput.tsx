@@ -25,11 +25,12 @@ type OtpInputProps = {
         },
         "otp"
     >;
+    time: number;
 };
 
-export function OtpInput({ field }: OtpInputProps) {
+export function OtpInput({ field, time }: OtpInputProps) {
     return (
-        <InputOTP maxLength={OTP_LENGTH} {...field}>
+        <InputOTP maxLength={OTP_LENGTH} {...field} disabled={time === 0}>
             {Array.from({ length: OTP_LENGTH }, (_, i) => (
                 <OtpSlot index={i} key={i} />
             ))}

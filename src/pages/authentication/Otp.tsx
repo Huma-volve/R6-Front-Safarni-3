@@ -28,6 +28,7 @@ import ErrorMsg from "@/components/shared/ErrorMsg";
 
 function Otp() {
     const [error, setError] = useState("");
+    const [time, setTime] = useState(30);
 
     const { setToken } = useAuthContext();
 
@@ -75,7 +76,7 @@ function Otp() {
                     Icon={Mail}
                 />
                 <p className="-mt-4">{email}</p>
-                <CountDown />
+                <CountDown time={time} setTime={setTime} />
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
@@ -89,7 +90,7 @@ function Otp() {
                             render={({ field }) => (
                                 <FormItem className="flex flex-col items-center justify-center text-center">
                                     <FormControl>
-                                        <OtpInput field={field} />
+                                        <OtpInput field={field} time={time} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
