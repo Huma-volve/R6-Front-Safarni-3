@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import AuthLayout from "./pages/authentication/AuthLayout";
 import GetStarted from "./pages/authentication/GetStarted";
@@ -11,8 +13,37 @@ import NewPassword from "./pages/authentication/NewPassword";
 import Done from "./pages/authentication/Done";
 import Home from "./pages/home/Home";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import PageLayout from "./pages/PageLayout";
+import Search from "./pages/search/Search";
+import Filter from "./pages/filter/Filter";
+import FilterResults from "./pages/filter/FilterResults";
 
 const router = createBrowserRouter([
+    {
+        element: (
+            <ProtectedRoute>
+                <PageLayout />
+            </ProtectedRoute>
+        ),
+        children: [
+            {
+                path: "/home",
+                element: <Home />,
+            },
+            {
+                path: "/search",
+                element: <Search />,
+            },
+            {
+                path: "/filter",
+                element: <Filter />,
+            },
+            {
+                path: "/filter-results",
+                element: <FilterResults />,
+            },
+        ],
+    },
     {
         element: <AuthLayout />,
         children: [
@@ -25,18 +56,17 @@ const router = createBrowserRouter([
             { path: "/done", element: <Done /> },
         ],
     },
-    {
-        path: "/home",
-        element: (
-            <ProtectedRoute>
-                <Home />
-            </ProtectedRoute>
-        ),
-    },
 ]);
 
+const queryClient = new QueryClient();
+
 function App() {
-    return <RouterProvider router={router} />;
+    return (
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+            <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+    );
 }
 
 export default App;

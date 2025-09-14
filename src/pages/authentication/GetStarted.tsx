@@ -4,7 +4,7 @@ import getStartedImg from "@/assets/images/get-started.png";
 import ImageSec from "./components/ImageSec";
 import ContentSecContainer from "./components/ContentSecContainer";
 import PageTitle from "./components/PageTitle";
-import AppButton from "./components/AppButton";
+import AppButton from "../../components/shared/AppButton";
 import Logo from "./components/Logo";
 
 function GetStarted() {
@@ -23,12 +23,10 @@ function GetStarted() {
                     experience."
                 />
                 <Link to="/signup" className="w-full">
-                    <AppButton className="bg-blue-700">Sign Up</AppButton>
+                    <AppButton>Sign Up</AppButton>
                 </Link>
                 <Link to="/login" className="w-full">
-                    <AppButton className="text-blue-700" variant="outline">
-                        Log In
-                    </AppButton>
+                    <AppButton variant="outline">Log In</AppButton>
                 </Link>
             </ContentSecContainer>
         </>

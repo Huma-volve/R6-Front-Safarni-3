@@ -1,7 +1,7 @@
 import logo from "@/assets/images/logo.png";
 
 type LogoProps = {
-    imgWidth: string;
+    imgWidth?: string;
 };
 
 function Logo({ imgWidth = "w-14" }: LogoProps) {
