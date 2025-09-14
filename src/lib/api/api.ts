@@ -121,20 +121,25 @@ export async function getRecommendedTours() {
     }
 }
 
-export async function getTours(filter: IFilterTour) {
+export async function getTours(filter?: IFilterTour) {
     try {
-        const params = Object.entries(filter)
-            .filter((param) => {
-                if (
-                    param[1] !== undefined &&
-                    param[1] !== "" &&
-                    param[1] !== "[]"
-                )
-                    return param;
-            })
-            .map((param) => `${param[0]}=${param[1]}`);
+        const params =
+            filter &&
+            Object.entries(filter)
+                .filter((param) => {
+                    if (
+                        param[1] !== undefined &&
+                        param[1] !== "" &&
+                        param[1] !== "[]"
+                    )
+                        return param;
+                })
+                .map((param) => `${param[0]}=${param[1]}`);
 
-        const res = await axios.get(`${safarni}/tours?${params.join("&")}`);
+        let url = `${safarni}/tours`;
+        if (params) url += `?${params.join("&")}`;
+
+        const res = await axios.get(url);
 
         return res.data;
     } catch (error) {

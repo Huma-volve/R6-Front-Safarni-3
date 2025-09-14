@@ -23,7 +23,7 @@ const categories = [
         id: 3,
         image: tours,
         title: "Tours",
-        path: "/tours",
+        path: "/filter-results",
     },
     {
         id: 4,

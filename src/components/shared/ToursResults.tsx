@@ -6,7 +6,7 @@ import ErrorMsg from "@/components/shared/ErrorMsg";
 import ToursList from "@/components/shared/ToursList";
 
 type ToursResultsProps = {
-    filter: IFilterTour;
+    filter?: IFilterTour;
 };
 
 function ToursResults({ filter }: ToursResultsProps) {
@@ -27,7 +27,7 @@ function ToursResults({ filter }: ToursResultsProps) {
             ) : (
                 <ToursList
                     tours={tours.data}
-                    location={filter.search || "All tours"}
+                    location={filter?.search || "All tours"}
                     numPages={tours.meta.last_page}
                     currentPage={tours.meta.current_page}
                     links={tours.links}

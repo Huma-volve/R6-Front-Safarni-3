@@ -19,7 +19,7 @@ export function useGetRecommendedTours() {
     return { isPending, data, error };
 }
 
-export function useGetTours(filter: IFilterTour) {
+export function useGetTours(filter?: IFilterTour) {
     const { isPending, data, error } = useQuery({
         queryKey: [filter, QUERY_KEYS.GET_TOURS],
         queryFn: () => getTours(filter),
