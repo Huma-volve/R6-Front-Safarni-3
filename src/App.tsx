@@ -1,6 +1,17 @@
+import 'leaflet/dist/leaflet.css';
+import { useEffect, useState } from 'react';
+import api from './Services/api';
+import type { Car } from './types/car';
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import {
+    RoomDetails,
+    RoomList,
+    HotelList,
+    CarList,
+      BrandList,
+      CarID,
+      CarMap,
     PageLayout,
     ErrorPage,
     Home,
@@ -80,6 +91,19 @@ const router = createBrowserRouter([
             { path: "userBooking", element: <UserBooking /> },
             { path: "userAccount", element: <UserAccount /> },
             { path: "favorite", element: <Favorite /> },
+             { path:'/cars/:id' ,element : <CarID/>},
+          {path:'/car-map' ,element: <CarMap/>},
+            {path:'/hotels' ,element:<HotelList/>},
+          {path:'/hotel/rooms/:hotelId', element:<RoomList/>},
+          {path:'/room/:roomId', element:<RoomDetails/>},
+          {path:'/cars'
+            , element:
+             <div className='container w-4/5 m-auto'>
+
+                 <BrandList/>
+                 <CarList/>
+             </div>
+             },
             {
                 path: "checkout",
                 element: <CheckoutLayout />,
@@ -122,6 +146,13 @@ const router = createBrowserRouter([
 const queryClient = new QueryClient();
 
 function App() {
+  const [car, setCar] = useState<Car | null>(null);
+   useEffect(() => {
+  api.get('/cars/1')
+    .then(res => setCar(res.data))
+    .catch(console.error);
+}, []);
+   
     return (
         <QueryClientProvider client={queryClient}>
             <RouterProvider router={router} />
@@ -130,5 +161,5 @@ function App() {
         </QueryClientProvider>
     );
 }
-
+   
 export default App;

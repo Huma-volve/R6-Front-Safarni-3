@@ -6,8 +6,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+
+
+
   --font-inter: "Inter", sans-serif;
   --shadow-custom:0px 2px 8px 0px #838BB41F;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
