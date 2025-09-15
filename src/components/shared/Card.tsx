@@ -1,48 +1,45 @@
-import { useContext, useState, useEffect } from "react";
-import { FavoriteContext } from "@/context/FavoriteContextProvider";
-import { Heart } from "lucide-react";
+import { useState, type ReactNode } from "react";
 
+import placeholderImg from "@/assets/images/placeholder_view.png";
+import { Link } from "react-router";
 
-type LikeButtonProps={
-  id:number
+type CardProps = {
+    direction: "horizontal" | "vertical";
+    imgSrc: string;
+    imgAlt: string;
+    tourId: number;
+    children: ReactNode;
+};
+
+function Card({ direction, imgSrc, imgAlt, tourId, children }: CardProps) {
+    const [img, setImg] = useState(imgSrc);
+
+    return (
+        <div
+            className={`w-full relative flex ${
+                direction === "vertical"
+                    ? "flex-col min-w-60 max-w-72"
+                    : "max-h-30 max-w-xl"
+            } rounded-lg p-2 sm:p-3 shadow-lg gap-2 mx-auto`}
+        >
+            <Link
+                to={`/tours/${tourId}`}
+                className={`overflow-hidden rounded-md ${
+                    direction === "vertical" ? "h-60" : "w-20 sm:w-40"
+                }`}
+            >
+                <img
+                    src={img}
+                    alt={imgAlt}
+                    className=" w-full h-full object-cover object-center"
+                    onError={() => setImg(placeholderImg)}
+                />
+            </Link>
+            <div className="flex-1 flex flex-col justify-between gap-1 mt-2">
+                {children}
+            </div>
+        </div>
+    );
 }
 
-function LikeButton({ id }: LikeButtonProps) {
-  const { addToFavorites, getFavorites, deleteFromFavorites, favorites } = useContext(FavoriteContext);
-
-  // 🔸 Initialize isLiked from favorites
-  const [isLiked, setIsLiked] = useState<boolean>(
-    favorites?.some((item) => item.id === id) || false
-  );
-
-  // 🔄 Update isLiked if favorites change (optional)
-  useEffect(() => {
-    setIsLiked(favorites?.some((item) => item.id === id) || false);
-  }, [favorites, id]);
-
-  // 🔁 Toggle like
-  async function handleLikeToggle(): Promise<void> {
-    if (isLiked) {
-      await deleteFromFavorites(id);
-    } else {
-      await addToFavorites(id);
-    }
-
-    setIsLiked(!isLiked); // Optimistic update
-    await getFavorites(); // Refresh from server
-  }
-
-  return (
-    <button
-      className="absolute top-5 right-5 bg-white p-2 rounded-full cursor-pointer z-10"
-      onClick={handleLikeToggle}
-    >
-      <Heart
-        className={isLiked ? "text-[#F05252] fill-[#F05252]" : "text-gray-400"}
-        size={18}
-      />
-    </button>
-  );
-}
-
-export default LikeButton;
+export default Card;

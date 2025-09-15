@@ -1,4 +1,8 @@
 export { default as PageLayout } from "./PageLayout";
+export { default as Profile } from "./profile/Profile";
+export { default as UserAccount } from "./profile/UserAccount";
+export { default as UserBooking } from "./profile/UserBooking";
+export { default as UserInfo } from "./profile/UserInfo";
 export { default as ErrorPage } from "./ErrorPage";
 export { default as CheckoutLayout } from "./CheckoutLayout";
 export { default as CheckoutPage } from "./CheckoutPage";
@@ -7,7 +11,7 @@ export { default as Home } from "./home/Home";
 export { default as Filter } from "./filter/Filter";
 export { default as Search } from "./search/Search";
 export { default as FilterResults } from "./filter/FilterResults";
-export { default as FavoritePage } from "./favorite/FavoritePage";
+export { default as Favorite } from "./favorite/Favorite";
 export { default as ComparePage } from "./compare/ComparePage";
 export { default as MapsPage } from "./interactive-map/MapsPage";
 export { default as DestinationPage } from "./destination/DestinationPage";
