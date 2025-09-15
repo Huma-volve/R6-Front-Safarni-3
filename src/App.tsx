@@ -1,55 +1,165 @@
-// import { Button } from "@/components/ui/button";
-// import { Search } from "lucide-react";
-import {BrowserRouter as Router, Route, Routes } from 'react-router';
-import CarList from './pages/car-booking/CarList';
-import BrandList from './pages/car-booking/BrandList';
-import CarID from './pages/car-booking/CarID';
-import CarMap from './pages/car-booking/CarMap';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
 import api from './Services/api';
 import type { Car } from './types/car';
-import HotelList from './pages/hotel-booking/HotelList';
-import RoomList from './pages/hotel-booking/RoomList';
-import RoomDetails from './pages/hotel-booking/RoomDetails';
+import { createBrowserRouter } from "react-router";
+import { RouterProvider } from "react-router/dom";
+import {
+    RoomDetails,
+    RoomList,
+    HotelList,
+    CarList,
+      BrandList,
+      CarID,
+      CarMap,
+    PageLayout,
+    ErrorPage,
+    Home,
+    Favorite,
+    ComparePage,
+    MapsPage,
+    Search,
+    Filter,
+    GetStarted,
+    CheckoutPage,
+    SuccessPage,
+    CheckoutLayout,
+    DestinationPage,
+    FilterResults,
+    Login,
+    Signup,
+    ForgetPassword,
+    Otp,
+    NewPassword,
+    Done,
+    UserInfo,
+    UserBooking,
+    UserAccount,
+    Profile,
+} from "./pages";
 
+import { FlightPage } from "./pages/flight-booking";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import AuthLayout from "./pages/authentication/AuthLayout";
+import ProtectedRoute from "./pages/ProtectedRoute";
+import { Toaster } from "sonner";
 
+const router = createBrowserRouter([
+    {
+        element: (
+            <ProtectedRoute>
+                <PageLayout />
+            </ProtectedRoute>
+        ),
+        children: [
+            {
+                path: "/home",
+                element: <Home />,
+            },
+            {
+                path: "/search",
+                element: <Search />,
+            },
+            {
+                path: "/filter",
+                element: <Filter />,
+            },
+            {
+                path: "/filter-results",
+                element: <FilterResults />,
+            },
+            {
+                path: "favorite",
+                element: <Favorite />,
+            },
+            {
+                path: "compare",
+                element: <ComparePage />,
+            },
+            {
+                path: "maps",
+                element: <MapsPage />,
+            },
 
-
-
-function App() {
-    const [car, setCar] = useState<Car | null>(null);
-
-    useEffect(() => {
-  api.get('/cars/1')
-    .then(res => setCar(res.data))
-    .catch(console.error);
-}, []);
-    
-
-    return (
-        <Router>
-           <Routes>
-            {/* <Route path="/" element={<Navigate to={"/cars"} replace/>}/>
-            <Route path='/' element={<BrandList/>}/> */}
-            <Route path='/cars'
-             element={
+            {
+                path: "flight",
+                element: <FlightPage />,
+            },
+            { path: "profile", element: <Profile /> },
+            { path: "userInfo", element: <UserInfo /> },
+            { path: "userBooking", element: <UserBooking /> },
+            { path: "userAccount", element: <UserAccount /> },
+            { path: "favorite", element: <Favorite /> },
+             { path:'/cars/:id' ,element : <CarID/>},
+          {path:'/car-map' ,element: <CarMap/>},
+            {path:'/hotels' ,element:<HotelList/>},
+          {path:'/hotel/rooms/:hotelId', element:<RoomList/>},
+          {path:'/room/:roomId', element:<RoomDetails/>},
+          {path:'/cars'
+            , element:
              <div className='container w-4/5 m-auto'>
 
                  <BrandList/>
                  <CarList/>
              </div>
-             }
-             
-             />
-             <Route path='/cars/:id'element = {<CarID/>}/>
-             <Route path='/car-map' element={ <CarMap/>}/>
-             <Route path='/hotels' element={<HotelList/>}/>
-             <Route path='/hotel/rooms/:hotelId' element={<RoomList/>}/>
-             <Route path='/room/:roomId' element={<RoomDetails/>}/>
-           </Routes>
-        </Router>
+             },
+            {
+                path: "checkout",
+                element: <CheckoutLayout />,
+                children: [
+                    {
+                        path: "",
+                        element: <CheckoutPage />,
+                    },
+                    {
+                        path: "success",
+                        element: <SuccessPage />,
+                    },
+                ],
+            },
+            {
+                path: "tours/:id",
+                element: <DestinationPage />,
+            },
+            {
+                path: "not-found",
+                element: <ErrorPage />,
+            },
+        ],
+    },
+    {
+        element: <AuthLayout />,
+        errorElement: <ErrorPage />,
+        children: [
+            { path: "/", element: <GetStarted /> },
+            { path: "/login", element: <Login /> },
+            { path: "/signup", element: <Signup /> },
+            { path: "/forget-password", element: <ForgetPassword /> },
+            { path: "/otp", element: <Otp /> },
+            { path: "/new-password", element: <NewPassword /> },
+            { path: "/done", element: <Done /> },
+        ],
+    },
+]);
+
+const queryClient = new QueryClient();
+
+function App() {
+  const [car, setCar] = useState<Car | null>(null);
+   useEffect(() => {
+  api.get('/cars/1')
+    .then(res => setCar(res.data))
+    .catch(console.error);
+}, []);
+   
+    return (
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router} />
+            <Toaster position="top-center" />
+            <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
     );
 }
-
+   
 export default App;
