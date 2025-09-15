@@ -1,11 +1,13 @@
 import { Dot, Star } from "lucide-react";
-
 import Card from "../shared/Card"
 import type { ITour } from "@/types";
 import LikeButton from './LikeButton';
 
+type TourCardProps = {
+    tour: ITour;
+};
 
-function TourCard({ tour }: ITour) {
+function TourCard({ tour }: TourCardProps) {
     return (
         <Card
             key={tour.id}
@@ -45,3 +47,4 @@ function TourCard({ tour }: ITour) {
 }
 
 export default TourCard;
+

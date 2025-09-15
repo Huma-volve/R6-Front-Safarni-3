@@ -1,9 +1,11 @@
 import { useContext, useState, useEffect } from "react";
 import { FavoriteContext } from "@/context/FavoriteContextProvider";
 import { Heart } from "lucide-react";
-import type { LikeButtonProps } from "@/types";
 
 
+type LikeButtonProps={
+  id:number
+}
 
 function LikeButton({ id }: LikeButtonProps) {
   const { addToFavorites, getFavorites, deleteFromFavorites, favorites } = useContext(FavoriteContext);
@@ -44,3 +46,4 @@ function LikeButton({ id }: LikeButtonProps) {
 }
 
 export default LikeButton;
+
