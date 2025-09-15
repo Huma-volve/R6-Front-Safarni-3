@@ -1,8 +1,7 @@
 import { Dot, Star } from "lucide-react";
-
-import Card from "@/components/shared/Card";
-import LikeButton from "./LikeButton";
+import Card from "../shared/Card"
 import type { ITour } from "@/types";
+import LikeButton from './LikeButton';
 
 type TourCardProps = {
     tour: ITour;
@@ -17,7 +16,7 @@ function TourCard({ tour }: TourCardProps) {
             imgAlt={tour.title}
             tourId={tour.id}
         >
-            <LikeButton />
+            <LikeButton id={tour.id}/>
 
             <div className="flex items-start justify-between gap-2">
                 <h2 className="font-semibold text-sm">{tour.title}</h2>
@@ -48,3 +47,4 @@ function TourCard({ tour }: TourCardProps) {
 }
 
 export default TourCard;
+

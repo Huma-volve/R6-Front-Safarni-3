@@ -1,3 +1,4 @@
+
 import { Link, NavLink } from "react-router";
 import { Menu, Search, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,6 +12,7 @@ const navLinks: { name: string; link: string }[] = [
   { name: "Maps", link: "/maps" },
 ];
 
+
 const NavBar = () => {
   const isLoggedIn: boolean = false;
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -20,6 +22,7 @@ const NavBar = () => {
   }
 
   return (
+
     <header className="flex py-2 lg:my-6 mb-12 px-4 justify-between m-auto items-center w-full max-w-[1272px] ">
       <Link className="flex flex-col gap-2 justify-center" to="/home">
         <img className="w-11 m-auto" src={logoIcon} alt="Safarni logo" />

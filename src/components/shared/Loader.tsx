@@ -1,11 +1,20 @@
-import { LoaderCircle } from "lucide-react";
+import { ThreeDots } from 'react-loader-spinner';
 
-function Loader() {
-    return (
-        <div className="w-full flex items-center justify-center mt-40">
-            <LoaderCircle className="animate-spin text-blue-700" size={40} />
-        </div>
-    );
+export default function Loader() {
+  return (
+    <>
+      <div className="h-screen flex justify-center items-center">
+        <ThreeDots
+  visible={true}
+  height="80"
+  width="80"
+  color="#3F52B4"
+  radius="9"
+  ariaLabel="three-dots-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  />
+      </div>
+    </>
+  )
 }
-
-export default Loader;

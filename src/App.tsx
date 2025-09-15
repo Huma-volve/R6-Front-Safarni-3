@@ -4,7 +4,7 @@ import {
     PageLayout,
     ErrorPage,
     Home,
-    FavoritePage,
+    Favorite,
     ComparePage,
     MapsPage,
     Search,
@@ -21,6 +21,10 @@ import {
     Otp,
     NewPassword,
     Done,
+    UserInfo,
+    UserBooking,
+    UserAccount,
+    Profile
 } from "./pages";
 
 import { FlightPage } from "./pages/flight-booking";
@@ -28,6 +32,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthLayout from "./pages/authentication/AuthLayout";
 import ProtectedRoute from "./pages/ProtectedRoute";
+import UserContextProvider from "./context/UserContextProvider";
+import { Toaster } from "sonner";
+import FavoriteContextProvider from "./context/FavoriteContextProvider";
+
+
+
 
 const router = createBrowserRouter([
     {
@@ -55,7 +65,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "favorite",
-                element: <FavoritePage />,
+                element: <Favorite />,
             },
             {
                 path: "compare",
@@ -70,6 +80,11 @@ const router = createBrowserRouter([
                 path: "flight",
                 element: <FlightPage />,
             },
+            {path:"profile",element:<Profile/>},
+            {path:"userInfo",element:<UserInfo/>},
+            {path:"userBooking",element:<UserBooking/>},
+            {path:"userAccount",element:<UserAccount/>},
+            {path:"favorite",element:<Favorite/>},
             {
                 path: "checkout",
                 element: <CheckoutLayout />,
@@ -111,12 +126,18 @@ const router = createBrowserRouter([
 
 const queryClient = new QueryClient();
 
-function App() {
-    return (
-        <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-            <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+function App() {  
+  return (
+
+    <QueryClientProvider client={queryClient}>
+    <UserContextProvider>
+      <FavoriteContextProvider>
+         <RouterProvider router={router} />
+          <Toaster position="top-center"/>
+      </FavoriteContextProvider>    
+    </UserContextProvider>
+     <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
     );
 }
 
