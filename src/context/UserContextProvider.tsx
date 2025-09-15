@@ -23,7 +23,7 @@ export default function UserContextProvider({
     children,
 }: UserContextProviderProps) {
     const [userInfo, setUserInfo] = useState<IUserInfo | null>(null);
-    const { token } = useAuthContext();
+    const { token, setToken } = useAuthContext();
 
     useEffect(() => {
         getUserInfo();
@@ -79,9 +79,13 @@ export default function UserContextProvider({
                     },
                 }
             );
+
             toast(response.data.message, {
                 icon: <SquareCheckBig size={24} className="text-green-400" />,
             });
+
+            setToken(null);
+            localStorage.removeItem("token");
             return response;
         } catch (error: any) {
             toast(
