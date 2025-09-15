@@ -22,3 +22,11 @@ export { default as Otp } from "./authentication/Otp";
 export { default as NewPassword } from "./authentication/NewPassword";
 export { default as ForgetPassword } from "./authentication/ForgetPassword";
 export { default as Done } from "./authentication/Done";
+export { default as  RoomDetails } from "./hotel-booking/RoomDetails";
+export { default as  RoomList } from "./hotel-booking/RoomList";
+export { default as  HotelList } from "./hotel-booking/HotelList";
+export { default as  CarList } from "./car-booking/CarList";
+export { default as BrandList } from "./car-booking/BrandList";
+export { default as CarID } from "./car-booking/CarID";
+export { default as CarMap } from "./car-booking/CarMap";
+

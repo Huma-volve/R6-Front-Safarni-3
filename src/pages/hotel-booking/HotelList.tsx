@@ -20,6 +20,7 @@ export default function HotelList() {
   const [shawAll , setShowAll]= useState(false);
   const [shawAll2 , setShowAll2]= useState(false);
   
+  
   useEffect(() => {
       axios.get("https://round5-safarnia.huma-volve.com/api/hotels") 
         .then((res) => {
@@ -48,7 +49,7 @@ export default function HotelList() {
   if (!hotels.length) return <p>No hotels found</p>;
   return (
     <>
-    <div className='container w-4/5 m-auto pb-4 pt-4'>
+    <div >
 
      <div className='flex justify-between mb-2 items-center'>
             <h2 className='font-medium text-xl'>Recommendation</h2>
