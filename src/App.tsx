@@ -98,7 +98,7 @@ const router = createBrowserRouter([
           {path:'/room/:roomId', element:<RoomDetails/>},
           {path:'/cars'
             , element:
-             <div className='container w-4/5 m-auto'>
+             <div className='w-4/5 m-auto'>
 
                  <BrandList/>
                  <CarList/>

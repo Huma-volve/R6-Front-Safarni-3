@@ -11,8 +11,8 @@ import {Search, ChevronLeft} from 'lucide-react';
 export default function BrandList() {
   return (
     <>
-    <div className='container '>
-        <div className='flex gap-4 py-4'>
+    <div>
+        <div className='flex gap-2 py-4'>
         <div className='p-2 w-10 rounded-full  bg-gray-200 '>
             <ChevronLeft className='text-xs' />
         </div>
