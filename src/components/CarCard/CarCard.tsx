@@ -47,31 +47,6 @@ export default function CarCard({car,onRent}: Props) {
             </Link>
 
     </div>
-    {/* <img 
-    src={car.category.image_url || "https://via.placeholder.com/300x200?text=No+Image"}
-    alt={`${car.brand} ${car.model}`}
-    className='w-full h-44 object-cover rounded-xl'/>
-
-    <div className="mt-3">
-        <h3 className='text-lg font-semibold'>
-            {car.brand} {car.model}
-        </h3>
-        <p className='text-sm text-gray-600'>
-            {car.transmission} . {car.seats} seats . {car.fuel_type}
-            {car.has_ac? ". A/C" : ""}
-        </p>
-        <div className='flex items-end justify-between mt-3'>
-            <div>
-                <p className='text-xs text-gray-500'>Daily rate</p>
-                <p className='text-xl font-bold'>${price.toFixed(2)}</p>
-            </div>
-            <button
-            onClick={()=> onRent?.(car.id)}
-            className='px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700'>
-                Rent Now
-            </button>
-        </div>
-    </div> */}
   </div>
   </>
 }

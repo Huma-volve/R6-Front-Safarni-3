@@ -29,7 +29,7 @@ const categories = [
         id: 4,
         image: hotel,
         title: "Hotel",
-        path: "/hotel",
+        path: "/hotels",
     },
 ];
 

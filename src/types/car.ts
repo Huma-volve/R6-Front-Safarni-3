@@ -35,24 +35,3 @@ export interface BrandCard{
     image:string;
     count:number;
 }
-
-
-// export const fetchBrands =async (api:string): Promise<BrandCard[]> =>{
-//     const response= await axios.get<Car[]>(api);
-//     const data = response.data;
-
-//     const brandMap: { [key :string]: BrandCard} ={};
-//     data.forEach(car => {
-//         if(!brandMap[car.brand]){
-//             brandMap[car.brand] = {
-//                      name:car.brand,
-//                      image: car.category.image_url,
-//                      count:1,
-//             };
-//         }else{
-//             brandMap[car.brand].count+=1;
-//         }
-//     });
-//     return Object.values(brandMap);
-// };
-
