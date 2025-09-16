@@ -18,3 +18,7 @@ export { default as Otp } from "./authentication/Otp";
 export { default as NewPassword } from "./authentication/NewPassword";
 export { default as ForgetPassword } from "./authentication/ForgetPassword";
 export { default as Done } from "./authentication/Done";
+export { default as FlightBookingPage } from "./flight-booking/FlightBookingPage";
+export { default as AvailableFlightsPage } from "./flight-booking/AvailableFlightsPage";
+export { default as AvailableSeatsPage } from "./flight-booking/AvailableSeatsPage";
+export { default as ConfirmFlightPage } from "./flight-booking/ConfirmFlightPage";
