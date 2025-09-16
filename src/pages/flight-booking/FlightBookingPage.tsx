@@ -3,17 +3,14 @@ import FlightImg from "./FlightImg";
 import arrowRounded from "@/assets/icons/arrow-path.svg";
 import arrowSquare from "@/assets/icons/arrow-path-rounded-square.svg";
 import arrowRight from "@/assets/icons/arrow-long-right.svg";
-import { useState } from "react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -27,6 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useNavigate } from "react-router";
 
 const formSchema = z.object({
   location: z.string().min(1),
@@ -41,9 +39,12 @@ const FlightPage = () => {
     resolver: zodResolver(formSchema),
   });
 
+  const navigate = useNavigate();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       console.log(values);
+      navigate("/available-flights");
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(values, null, 2)}</code>
