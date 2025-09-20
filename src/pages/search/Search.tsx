@@ -45,7 +45,7 @@ function Search() {
         content = <ToursResults filter={{ search: selectedLocation }} />;
 
     return (
-        <main className="p-4 lg:p-0 container mx-auto overflow-x-hidden w-100vw">
+        <main>
             <header className="flex items-center gap-2 sm:gap-4">
                 <GoBackButton />
                 <SearchInput

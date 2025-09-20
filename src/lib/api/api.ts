@@ -167,3 +167,13 @@ export async function getSearchLocations(key: string) {
         throw error;
     }
 }
+
+export async function getTourDetails(id: number) {
+    try {
+        const res = await axios.get(`${safarni}/tours/${id}`);
+        return res.data.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}

@@ -5,4 +5,5 @@ export enum QUERY_KEYS {
     GET_TRENDING_TOURS = "getTrendingTours",
     GET_SEARCH_LOCATIONS = "getSearchLocations",
     FAVORITES = "favorites",
+    GET_TOUR_DETAILS = "getTourDetails",
 }

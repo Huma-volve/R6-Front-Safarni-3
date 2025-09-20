@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
     getRecommendedTours,
     getSearchLocations,
+    getTourDetails,
     getTours,
     getTrendingTours,
 } from "../api/api";
@@ -33,6 +34,16 @@ export function useGetTrendingTours() {
     const { isPending, data, error } = useQuery({
         queryKey: [QUERY_KEYS.GET_TRENDING_TOURS],
         queryFn: getTrendingTours,
+        retry: false,
+    });
+
+    return { isPending, data, error };
+}
+
+export function useGetTourDetails(id: number) {
+    const { isPending, data, error } = useQuery({
+        queryKey: [QUERY_KEYS.GET_TOUR_DETAILS, id],
+        queryFn: () => getTourDetails(id),
         retry: false,
     });
 

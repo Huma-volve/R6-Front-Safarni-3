@@ -16,11 +16,11 @@ function Card({ direction, imgSrc, imgAlt, tourId, children }: CardProps) {
 
     return (
         <div
-            className={`w-full relative flex ${
+            className={`w-full relative flex mx-auto ${
                 direction === "vertical"
                     ? "flex-col min-w-60 max-w-72"
-                    : "max-h-30 max-w-xl"
-            } rounded-lg p-2 sm:p-3 shadow-lg gap-2 mx-auto`}
+                    : "max-w-xl"
+            } rounded-lg p-2 sm:p-3 shadow-lg gap-2`}
         >
             <Link
                 to={`/tours/${tourId}`}
