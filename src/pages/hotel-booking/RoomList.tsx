@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import type { Room } from '@/types/hotel';
 import RoomCard from '@/components/RoomCard/RoomCard';
-import axios from 'axios';
 import api from '@/Services/api';
 import { useParams } from 'react-router';
 
