@@ -45,12 +45,28 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import AuthLayout from "./pages/authentication/AuthLayout";
 import ProtectedRoute from "./pages/ProtectedRoute";
 import { Toaster } from "sonner";
+import UserContextProvider from "./context/UserContextProvider";
 
 const router = createBrowserRouter([
     {
+        element: <AuthLayout />,
+        errorElement: <PageNotFound />,
+        children: [
+            { path: "/", element: <GetStarted /> },
+            { path: "/login", element: <Login /> },
+            { path: "/signup", element: <Signup /> },
+            { path: "/forget-password", element: <ForgetPassword /> },
+            { path: "/otp", element: <Otp /> },
+            { path: "/new-password", element: <NewPassword /> },
+            { path: "/done", element: <Done /> },
+        ],
+    },
+    {
         element: (
             <ProtectedRoute>
-                <PageLayout />
+                <UserContextProvider>
+                    <PageLayout />
+                </UserContextProvider>
             </ProtectedRoute>
         ),
         children: [
@@ -91,19 +107,6 @@ const router = createBrowserRouter([
                         path: "success",
                         element: <SuccessPage />,
                     },
-                ],
-            },
-            {
-                element: <AuthLayout />,
-                errorElement: <PageNotFound />,
-                children: [
-                    { path: "/", element: <GetStarted /> },
-                    { path: "/login", element: <Login /> },
-                    { path: "/signup", element: <Signup /> },
-                    { path: "/forget-password", element: <ForgetPassword /> },
-                    { path: "/otp", element: <Otp /> },
-                    { path: "/new-password", element: <NewPassword /> },
-                    { path: "/done", element: <Done /> },
                 ],
             },
         ],

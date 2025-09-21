@@ -36,8 +36,6 @@ const RoomList: React.FC =() =>  {
     return <p className="text-center py-6 text-red-500">{error}</p>;
   }
 
-
-
   return (
    <div className='container w-4/5 m-auto pb-4 pt-4'>
     <div className='flex justify-between mb-2 items-center'>

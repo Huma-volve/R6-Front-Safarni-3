@@ -1,17 +1,8 @@
 import { useState, useEffect } from "react";
-import {
-    MapContainer,
-    TileLayer,
-    Marker,
-    Polyline,
-    useMap,
-    useMapEvents,
-} from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Polyline } from "react-leaflet";
 import L from "leaflet";
-import * as turf from "@turf/turf";
 import "leaflet/dist/leaflet.css";
 import type { Car } from "@/types/car";
-import { useParams } from "react-router";
 import { useLocation } from "react-router";
 import BrokenCar from "../../../src/assets/images/WhatsApp Image 2025-09-14 at 18.55.33_1ed5813f.jpg";
 
@@ -32,43 +23,43 @@ export default function CarMap() {
     );
     const location = useLocation();
     const state = location.state as LocationState;
-    const [distance, setDistance] = useState<number | null>(null);
-    const [time, setTime] = useState<number | null>(null);
-    const { id } = useParams();
+    // const [distance, setDistance] = useState<number | null>(null);
+    // const [time, setTime] = useState<number | null>(null);
+    // const { id } = useParams();
 
     const { car, userAddress } = state;
     const price = parseFloat(car?.daily_rate || "0");
     const hourlyPrice = price / 24;
 
-    function LocationSelector() {
-        useMapEvents({
-            click(e) {
-                const loc: [number, number] = [e.latlng.lat, e.latlng.lng];
-                setUserLocation(loc);
+    // function LocationSelector() {
+    //     useMapEvents({
+    //         click(e) {
+    //             const loc: [number, number] = [e.latlng.lat, e.latlng.lng];
+    //             setUserLocation(loc);
 
-                const from = turf.point([fixedLocation[1], fixedLocation[0]]);
-                const to = turf.point([loc[1], loc[0]]);
-                const d = turf.distance(from, to, {
-                    units: "kilometers" as const,
-                });
-                setDistance(d);
+    //             const from = turf.point([fixedLocation[1], fixedLocation[0]]);
+    //             const to = turf.point([loc[1], loc[0]]);
+    //             const d = turf.distance(from, to, {
+    //                 units: "kilometers" as const,
+    //             });
+    //             setDistance(d);
 
-                setTime((d / 50) * 60);
-            },
-        });
-        return null;
-    }
+    //             setTime((d / 50) * 60);
+    //         },
+    //     });
+    //     return null;
+    // }
 
-    function FitBounds() {
-        const map = useMap();
-        useEffect(() => {
-            if (userLocation) {
-                const bounds = L.latLngBounds([fixedLocation, userLocation]);
-                map.fitBounds(bounds, { padding: [50, 50] });
-            }
-        }, [userLocation]);
-        return null;
-    }
+    // function FitBounds() {
+    //     const map = useMap();
+    //     useEffect(() => {
+    //         if (userLocation) {
+    //             const bounds = L.latLngBounds([fixedLocation, userLocation]);
+    //             map.fitBounds(bounds, { padding: [50, 50] });
+    //         }
+    //     }, [userLocation]);
+    //     return null;
+    // }
 
     // تحويل العنوان لإحداثيات
     useEffect(() => {

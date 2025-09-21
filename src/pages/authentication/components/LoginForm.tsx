@@ -15,7 +15,7 @@ import { loginValidationSchema } from "@/lib/validation";
 import ErrorMsg from "../../../components/shared/ErrorMsg";
 
 function LoginForm() {
-    const { setToken, setUser } = useAuthContext();
+    const { setToken } = useAuthContext();
     const navigate = useNavigate();
     const [error, setError] = useState("");
 
@@ -31,13 +31,12 @@ function LoginForm() {
         try {
             const result = await login(values);
 
-            const { token, name, email, phone, country, image } = result.data;
+            const { token } = result.data;
 
             if (!token) {
                 setError(result.message || "Login failed");
             }
 
-            setUser({ name, email, phone, country, image });
             setToken(token);
             form.reset();
             navigate("/home");

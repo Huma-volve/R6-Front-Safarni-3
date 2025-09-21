@@ -54,35 +54,3 @@ export default function BrandList() {
         </div>
     );
 }
-
-// const BrandList: React.FC = () => {
-//     const [brands,setBrands]= useState<BrandCard[]>([]);
-
-//     useEffect(()=>{
-//         fetchBrands("https://round5-safarnia.huma-volve.com/api/cars")
-//         .then(setBrands)
-//         .catch(console.error);
-//     },[]);
-//     return(
-//         <div>
-//             <h2 className='text-2xl mb-4 font-semibold '>Brands</h2>
-
-//         <div className='flex  gap-5 flex-wrap'>
-//             {brands.map((brand,index) => (
-//               <div
-//               key={index}
-//               className=' border-2 border-gray-200 rounded-xl p-10 text-center shadow'
-//             >
-//             <img
-//             src={brand.image}
-//             alt={brand.name}
-//             className='w-full rounded-xl'/>
-//             <h3>{brand.name}</h3>
-//             <p className='text-blue-500'>+{brand.count}</p>
-//         </div>
-//             ))}
-//             </div>
-//         </div>
-//     );
-// };
-// export default BrandList;
