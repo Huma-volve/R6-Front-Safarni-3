@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { RadioGroup } from "@/components/ui/radio-group";
 import { RadioGroupItem } from "@radix-ui/react-radio-group";
+import AppButton from "./AppButton";
 
 const formSchema = z.object({
     paymentmehtod: z.string(),
@@ -90,9 +90,7 @@ export default function PaymentMethodForm({
                     )}
                 />
 
-                <Button size="full" type="submit">
-                    Continue
-                </Button>
+                <AppButton type="submit">Continue</AppButton>
             </form>
         </Form>
     );

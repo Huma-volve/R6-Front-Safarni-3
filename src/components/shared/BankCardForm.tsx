@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
@@ -19,6 +18,7 @@ import userIcon from "@/assets/icons/user.svg";
 import emailIcon from "@/assets/icons/envelope.svg";
 import windowIcon from "@/assets/icons/window.svg";
 import { useNavigate } from "react-router";
+import AppButton from "./AppButton";
 
 const formSchema = z.object({
     fullname: z.string().min(1).min(2).max(20),
@@ -168,9 +168,7 @@ const BankCardForm = ({
                             />
                         </div>
                     </div>
-                    <Button size="full" type="submit">
-                        Submit
-                    </Button>
+                    <AppButton type="submit">Submit</AppButton>
                 </form>
             </Form>
         </>

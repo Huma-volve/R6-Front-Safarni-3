@@ -68,7 +68,7 @@ export default function UserContextProvider({
         }
     }
 
-    async function deleteAccount(): Promise<void> {
+    async function deleteAccount() {
         try {
             const response = await axios.post(
                 `${url}/profile/delete-account`,

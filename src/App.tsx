@@ -5,16 +5,13 @@ import {
     RoomDetails,
     RoomList,
     HotelList,
-    CarList,
-    BrandList,
     CarID,
     CarMap,
     PageLayout,
-    ErrorPage,
+    PageNotFound,
     Home,
     Favorite,
     ComparePage,
-    MapsPage,
     Search,
     Filter,
     GetStarted,
@@ -38,6 +35,9 @@ import {
     AvailableSeatsPage,
     ConfirmFlightPage,
     FlightPage,
+    Cars,
+    InteractiveMap,
+    InternalTour,
 } from "./pages";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -54,131 +54,48 @@ const router = createBrowserRouter([
             </ProtectedRoute>
         ),
         children: [
+            { path: "*", element: <PageNotFound /> },
+            { path: "/home", element: <Home /> },
+            { path: "/search", element: <Search /> },
+            { path: "/filter", element: <Filter /> },
+            { path: "/filter-results", element: <FilterResults /> },
+            { path: "/compare", element: <ComparePage /> },
+            { path: "/favorite", element: <Favorite /> },
+            { path: "/flight", element: <FlightPage /> },
+            { path: "/flight-booking", element: <FlightBookingPage /> },
+            { path: "/available-flights", element: <AvailableFlightsPage /> },
+            { path: "/flight/confirm", element: <ConfirmFlightPage /> },
+            { path: "/profile", element: <Profile /> },
+            { path: "/userInfo", element: <UserInfo /> },
+            { path: "/userBooking", element: <UserBooking /> },
+            { path: "/userAccount", element: <UserAccount /> },
+            { path: "/cars/:id", element: <CarID /> },
+            { path: "/car-map", element: <CarMap /> },
+            { path: "/hotels", element: <HotelList /> },
+            { path: "/hotel/rooms/:hotelId", element: <RoomList /> },
+            { path: "/room/:roomId", element: <RoomDetails /> },
+            { path: "/cars", element: <Cars /> },
+            { path: "/tours/:id", element: <DestinationPage /> },
+            { path: "/available-seats", element: <AvailableSeatsPage /> },
+            { path: "/map", element: <InteractiveMap /> },
+            { path: "/internal-tour", element: <InternalTour /> },
             {
-                path: "/home",
-                element: <Home />,
-            },
-            {
-                path: "/search",
-                element: <Search />,
-            },
-            {
-                path: "/filter",
-                element: <Filter />,
-            },
-            {
-                path: "/filter-results",
-                element: <FilterResults />,
-            },
-            {
-                path: "compare",
-                element: <ComparePage />,
-            },
-            {
-                path: "maps",
-                element: <MapsPage />,
-            },
-            {
-                element: (
-                    <ProtectedRoute>
-                        <PageLayout />
-                    </ProtectedRoute>
-                ),
+                path: "checkout",
+                element: <CheckoutLayout />,
                 children: [
                     {
-                        path: "/home",
-                        element: <Home />,
+                        path: "",
+                        element: <CheckoutPage />,
                     },
                     {
-                        path: "/search",
-                        element: <Search />,
-                    },
-                    {
-                        path: "/filter",
-                        element: <Filter />,
-                    },
-                    {
-                        path: "/filter-results",
-                        element: <FilterResults />,
-                    },
-                    {
-                        path: "favorite",
-                        element: <Favorite />,
-                    },
-                    {
-                        path: "compare",
-                        element: <ComparePage />,
-                    },
-                    {
-                        path: "maps",
-                        element: <MapsPage />,
-                    },
-                    {
-                        path: "flight",
-                        element: <FlightPage />,
-                    },
-                    { path: "profile", element: <Profile /> },
-                    { path: "userInfo", element: <UserInfo /> },
-                    { path: "userBooking", element: <UserBooking /> },
-                    { path: "userAccount", element: <UserAccount /> },
-                    { path: "favorite", element: <Favorite /> },
-                    { path: "/cars/:id", element: <CarID /> },
-                    { path: "/car-map", element: <CarMap /> },
-                    { path: "/hotels", element: <HotelList /> },
-                    { path: "/hotel/rooms/:hotelId", element: <RoomList /> },
-                    { path: "/room/:roomId", element: <RoomDetails /> },
-                    {
-                        path: "/cars",
-                        element: (
-                            <div className="container w-4/5 m-auto">
-                                <BrandList />
-                                <CarList />
-                            </div>
-                        ),
-                    },
-                    {
-                        path: "checkout",
-                        element: <CheckoutLayout />,
-                        children: [
-                            {
-                                path: "",
-                                element: <CheckoutPage />,
-                            },
-                            {
-                                path: "success",
-                                element: <SuccessPage />,
-                            },
-                        ],
-                    },
-                    {
-                        path: "tours/:id",
-                        element: <DestinationPage />,
-                    },
-                    {
-                        path: "not-found",
-                        element: <ErrorPage />,
-                    },
-                    {
-                        path: "flight-booking",
-                        element: <FlightBookingPage />,
-                    },
-                    {
-                        path: "available-flights",
-                        element: <AvailableFlightsPage />,
-                    },
-                    {
-                        path: "available-seats",
-                        element: <AvailableSeatsPage />,
-                    },
-                    {
-                        path: "/flight/confirm",
-                        element: <ConfirmFlightPage />,
+                        path: "success",
+                        element: <SuccessPage />,
                     },
                 ],
             },
             {
                 element: <AuthLayout />,
-                errorElement: <ErrorPage />,
+                errorElement: <PageNotFound />,
                 children: [
                     { path: "/", element: <GetStarted /> },
                     { path: "/login", element: <Login /> },

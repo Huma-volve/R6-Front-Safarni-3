@@ -9,6 +9,7 @@ import { useState } from "react";
 import paypalIcon from "@/assets/icons/paypal.svg";
 import masterIcon from "@/assets/icons/mastercard.svg";
 import visaIcon from "@/assets/icons/visa.svg";
+import { useLocation } from "react-router";
 
 const paymentOptionsArr = [
     { label: "Paypal", val: "paypal", icon: paypalIcon },
@@ -18,6 +19,10 @@ const paymentOptionsArr = [
 
 const CheckoutPage = () => {
     const [formType, setFormType] = useState("");
+    const location = useLocation();
+
+    // You will find here booking data that comes from different booking pages (tour or flight or car)
+    console.log(location.state);
 
     let content = (
         <PaymentMethodForm

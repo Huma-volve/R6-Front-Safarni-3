@@ -40,7 +40,7 @@ function ComparePlans({ tours }: ComparePlansProps) {
             booking_type: "tour",
         };
 
-        navigate("/checkout", { state: bookingData });
+        navigate("/checkout?booking_type=tour", { state: bookingData });
     }
 
     return (
