@@ -31,44 +31,37 @@ export interface IUserContext {
   getBookingHistory: () => Promise<void>;
 }
 
-
-
 //favorite
 
 export type ITour = {
-    id: number;
-    title: string;
-    location: string;
-    description: string;
-    price: string;
-    image: string;
-    views: number;
-    is_recommended: boolean;
-    is_favorite: boolean;
-    rating:number;
+  id: number;
+  title: string;
+  location: string;
+  description: string;
+  price: string;
+  image: string;
+  views: number;
+  is_recommended: boolean;
+  is_favorite: boolean;
+  rating: number;
 };
 
-
- export interface FavoriteContextType {
+export interface FavoriteContextType {
   favorites: Favorite[];
   getFavorites: () => Promise<AxiosResponse<any> | void>;
   addToFavorites: (id: number) => Promise<void>;
   deleteFromFavorites: (id: number) => Promise<void>;
 }
 
-
 export interface FavoriteProviderProps {
   children: ReactNode;
 }
-
 
 export interface Favorite {
   id: number;
 }
 
-
 //--------------------------------------------------------
-
 
 export interface FlightBooking {
   id: number;
