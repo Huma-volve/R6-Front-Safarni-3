@@ -1,4 +1,5 @@
-import type { Dispatch, SetStateAction } from "react";
+import type { AxiosResponse } from "axios";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 
 export type INewUser = {
     name: string;
@@ -11,19 +12,9 @@ export type IUserCredentials = {
     password: string;
 };
 
-export type IUserInfo = {
-    name: string;
-    email: string;
-    phone: string;
-    country: string;
-    image: string;
-};
-
 export type IContextType = {
     token: string | null;
     setToken: Dispatch<SetStateAction<null>>;
-    user: IUserInfo;
-    setUser: Dispatch<SetStateAction<IUserInfo>>;
 };
 
 export type ICategory = {
@@ -88,3 +79,90 @@ export type Link = {
     page: number | null;
     active: boolean;
 };
+
+// user & profile
+
+export interface LikeButtonProps {
+    id: number;
+}
+
+export interface IUserInfo {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+}
+
+export interface IUserUpdateData {
+    name: string;
+    email: string;
+    phone: string;
+}
+
+export interface IUserContext {
+    userInfo: IUserInfo | null;
+    getUserInfo: () => Promise<void>;
+    UpdateUserInfo: (data: IUserUpdateData) => Promise<void>;
+    deleteAccount: () => Promise<void>;
+    getBookingHistory: () => Promise<void>;
+}
+
+export interface FavoriteContextType {
+    favorites: Favorite[];
+    getFavorites: () => Promise<AxiosResponse<any> | void>;
+    addToFavorites: (id: number) => Promise<void>;
+    deleteFromFavorites: (id: number) => Promise<void>;
+}
+
+export interface FavoriteProviderProps {
+    children: ReactNode;
+}
+
+export interface Favorite {
+    id: number;
+}
+
+//--------------------------------------------------------
+
+export interface FlightBooking {
+    id: number;
+    booking_date: string;
+    flight_id: string;
+    seat_id: string;
+}
+
+export interface CarCategory {
+    name: string;
+    image_url: string;
+}
+
+export interface CarData {
+    model: string;
+    transmission: string;
+    seats: number;
+    fuel_type: string;
+    category: CarCategory;
+}
+
+export interface CarBooking {
+    id: number;
+    car: CarData;
+}
+
+export interface TourBooking {
+    id: number;
+    tour_id: number;
+    tour_title: string;
+    total_price: number;
+    seats_count: number;
+}
+
+export interface RoomBooking {
+    id: number;
+    check_in_date: string;
+    check_out_date: string;
+}
+
+export interface TourImageMap {
+    [tourId: number]: string;
+}

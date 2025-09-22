@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
-import axios, { type AxiosResponse } from "axios";
+import axios from "axios";
 import { toast } from "sonner";
 import { SquareCheckBig, X } from "lucide-react";
 import type { IUserContext, IUserInfo, IUserUpdateData } from "@/types";
@@ -29,7 +29,7 @@ export default function UserContextProvider({
         getUserInfo();
     }, []);
 
-    async function getUserInfo(): Promise<AxiosResponse<any> | void> {
+    async function getUserInfo() {
         try {
             const response = await axios.get<{ data: IUserInfo }>(
                 `${url}/profile`,
@@ -68,7 +68,7 @@ export default function UserContextProvider({
         }
     }
 
-    async function deleteAccount(): Promise<void> {
+    async function deleteAccount() {
         try {
             const response = await axios.post(
                 `${url}/profile/delete-account`,
@@ -100,7 +100,7 @@ export default function UserContextProvider({
 
     //--------------------------------------------------------------------------------------
 
-    async function getMyFlightBookings(): Promise<AxiosResponse<any> | void> {
+    async function getMyFlightBookings() {
         try {
             const response = await axios.get(`${url}/my-bookings/flight`, {
                 headers: {
@@ -113,7 +113,7 @@ export default function UserContextProvider({
         }
     }
 
-    async function getMyCarBookings(): Promise<AxiosResponse<any> | void> {
+    async function getMyCarBookings() {
         try {
             const response = await axios.get(`${url}/bookings/my`, {
                 headers: {
@@ -126,7 +126,7 @@ export default function UserContextProvider({
         }
     }
 
-    async function getMyRoomBookings(): Promise<AxiosResponse<any> | void> {
+    async function getMyRoomBookings() {
         try {
             const response = await axios.get(`${url}/my/room/bookings`, {
                 headers: {
@@ -139,7 +139,7 @@ export default function UserContextProvider({
         }
     }
 
-    async function getMyTourBookings(): Promise<AxiosResponse<any> | void> {
+    async function getMyTourBookings() {
         try {
             const response = await axios.get(`${url}/my-tour-bookings`, {
                 headers: {
@@ -152,9 +152,7 @@ export default function UserContextProvider({
         }
     }
 
-    async function getTourDetails(
-        id: number
-    ): Promise<AxiosResponse<any> | void> {
+    async function getTourDetails(id: number) {
         try {
             const response = await axios.get(`${url}/tours/${id}`, {
                 headers: {
@@ -167,7 +165,7 @@ export default function UserContextProvider({
         }
     }
 
-    async function getAllTour(): Promise<AxiosResponse<any> | void> {
+    async function getAllTour() {
         try {
             const response = await axios.get(`${url}/tours`, {
                 headers: {

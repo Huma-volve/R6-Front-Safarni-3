@@ -1,32 +1,19 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
-import type { IContextType, IUserInfo } from "@/types";
-
-const INITIAL_USER: IUserInfo = {
-    name: "",
-    email: "",
-    phone: "",
-    country: "",
-    image: "",
-};
+import type { IContextType } from "@/types";
 
 const Authcontext = createContext<IContextType>({
     token: null,
     setToken: () => {},
-    user: INITIAL_USER,
-    setUser: () => {},
 });
 
 function AuthProvider({ children }: { children: ReactNode }) {
     const [token, setToken] = useLocalStorageState(null, "token");
-    const [user, setUser] = useState(INITIAL_USER);
 
     const value = {
         token,
         setToken,
-        user,
-        setUser,
     };
 
     return (

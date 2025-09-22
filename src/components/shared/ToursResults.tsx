@@ -4,12 +4,19 @@ import NoResults from "@/components/shared/NoResults";
 import Loader from "@/components/shared/Loader";
 import ErrorMsg from "@/components/shared/ErrorMsg";
 import ToursList from "@/components/shared/ToursList";
+import ComparePlans from "@/pages/compare/components/ComparePlans";
 
 type ToursResultsProps = {
     filter?: IFilterTour;
+    tourCardType?: "highlight" | "preview";
+    showPlans?: boolean;
 };
 
-function ToursResults({ filter }: ToursResultsProps) {
+function ToursResults({
+    filter,
+    tourCardType,
+    showPlans = false,
+}: ToursResultsProps) {
     const {
         isPending: isLoadingTours,
         data: tours,
@@ -25,14 +32,19 @@ function ToursResults({ filter }: ToursResultsProps) {
             ) : error ? (
                 <ErrorMsg msg={error.message} />
             ) : (
-                <ToursList
-                    tours={tours.data}
-                    location={filter?.search || "All tours"}
-                    numPages={tours.meta.last_page}
-                    currentPage={tours.meta.current_page}
-                    links={tours.links}
-                    numResults={tours.meta.total}
-                />
+                <>
+                    <ToursList
+                        tours={tours.data}
+                        location={filter?.search || "All tours"}
+                        numPages={tours.meta.last_page}
+                        currentPage={tours.meta.current_page}
+                        links={tours.links}
+                        numResults={tours.meta.total}
+                        tourCardType={tourCardType}
+                    />
+
+                    {showPlans && <ComparePlans tours={tours.data} />}
+                </>
             )}
         </>
     );

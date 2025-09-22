@@ -9,7 +9,7 @@ function GoBackButton() {
     return (
         <Button
             onClick={() => navigate(-1)}
-            className="self-end bg-gray-100 rounded-full w-10 h-10 cursor-pointer hover:bg-gray-200"
+            className="self-end bg-gray-100 rounded-full w-10 h-10 cursor-pointer hover:bg-gray-200 my-4"
         >
             <ChevronLeft className="text-gray-800" size={32} />
         </Button>

@@ -1,10 +1,11 @@
-import { BackBtn, NoItemFound } from "@/components/shared";
+import { NoItemFound } from "@/components/shared";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Rating, RatingButton } from "@/components/ui/shadcn-io/rating";
-import { Button } from "@/components/ui/button";
 import ActivityCard from "./ActivityCard";
 import ReviewCard from "./ReviewCard";
+import AppButton from "@/components/shared/AppButton";
+import GoBackButton from "@/components/shared/GoBackButton";
 
 type Tour = {
     id: number;
@@ -59,7 +60,9 @@ const DestinationPage = () => {
 
     function bookingHandler() {
         // Handling payment throug context
-        navigate("/checkout");
+        navigate("/checkout?booking_type=tour", {
+            state: { booking_id: tourData?.id, booking_type: "tour" },
+        });
     }
 
     useEffect(() => {
@@ -75,7 +78,7 @@ const DestinationPage = () => {
                 const data = await tourRes.json();
 
                 setTourData(data.data);
-            } catch (error) {
+            } catch {
                 navigate("not-found");
             }
         };
@@ -93,7 +96,7 @@ const DestinationPage = () => {
                 const reviewsData = await reviewsRes.json();
 
                 setReviews(reviewsData.data);
-            } catch (error) {
+            } catch {
                 console.error("Error fetching reviews");
             }
         };
@@ -109,7 +112,7 @@ const DestinationPage = () => {
     return (
         <>
             <div className="m-auto w-full max-w-[1272px] px-4">
-                <BackBtn />
+                <GoBackButton />
 
                 <div className="mb-10 flex flex-col gap-4">
                     <img
@@ -118,10 +121,10 @@ const DestinationPage = () => {
                         className="h-[480px] w-full object-cover mb-2 rounded-xl"
                     />
                     <div className="flex flex-col md:flex-row items-center justify-between">
-                        <h1 className="text-[32px] font-semibold text-gray-900">
+                        <h1 className="text-xl font-semibold text-gray-900">
                             {tourData?.title}
                         </h1>
-                        <div className="flex gap-1">
+                        <div className="flex items-center gap-1">
                             <Rating value={averageRating}>
                                 {Array.from({ length: 5 }).map((_, index) => (
                                     <RatingButton
@@ -130,15 +133,15 @@ const DestinationPage = () => {
                                     />
                                 ))}
                             </Rating>
-                            <p className="text-[#4B4F63] font-semibold text-lg">
+                            <p className="text-[#4B4F63] font-semibold">
                                 {averageRating}
-                                <span className="font-[#6B6E80] text-[16px]">
+                                <span className="font-[#6B6E80]">
                                     ({reviews?.total_reviews})
                                 </span>
                             </p>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-2 md:flex-row justify-between text-[26px] text-gray-600 font-medium">
+                    <div className="flex flex-col gap-2 md:flex-row justify-between text-lg text-gray-600 font-medium">
                         <p className="font-semibold">{tourData?.guide}</p>
                         <p>{tourData?.duration} Days</p>
                         <p className="text-gray-500">{tourData?.location}</p>
@@ -146,9 +149,7 @@ const DestinationPage = () => {
                 </div>
 
                 <div className="mb-10">
-                    <h2 className="font-medium text-2xl mb-4">
-                        Top Activities
-                    </h2>
+                    <h2 className="font-medium text-xl mb-4">Top Activities</h2>
                     <ul className="flex md:flex-row flex-col justify-between gap-6">
                         {tourData?.highlights.map((item) => (
                             <li key={item} className="w-full">
@@ -159,7 +160,7 @@ const DestinationPage = () => {
                 </div>
 
                 <div className="mb-10">
-                    <h2 className="font-medium text-2xl mb-4">
+                    <h2 className="font-medium text-lg mb-4">
                         Best Time to Visit
                     </h2>
                     <p className="border-[#D1D3DB] border-[1px] rounded-lg p-2">
@@ -167,13 +168,13 @@ const DestinationPage = () => {
                     </p>
                 </div>
                 <div>
-                    <h2 className="font-medium text-2xl mb-4">
+                    <h2 className="font-medium text-lg mb-4">
                         Gallery<span className="text-blue-700">(0)</span>
                     </h2>
                     <NoItemFound text="Images" />
                 </div>
                 <div>
-                    <h2 className="font-medium text-2xl mb-4">Reviews</h2>
+                    <h2 className="font-medium text-lg mb-4">Reviews</h2>
                     {reviews && reviews?.reviews?.length > 0 ? (
                         <ul className="grid md:grid-cols-2 gap-6">
                             {reviews?.reviews?.map((review: Review) => (
@@ -189,16 +190,14 @@ const DestinationPage = () => {
             </div>
             <div className="py-12 mt-10 shadow-[0_-10px_15px_0px_theme(colors.gray.200)]">
                 <div className="grid md:grid-cols-2 gap-4 justify-between items-center m-auto w-full max-w-[1272px] px-4">
-                    <p className="text-2xl">
+                    <p className="text-lg">
                         Total Price:{" "}
                         <span className="text-blue-700 font-bold">
                             ${tourData?.price}
                         </span>
                         <span className="text-lg">/night</span>
                     </p>
-                    <Button size="full" onClick={bookingHandler}>
-                        Book Now
-                    </Button>
+                    <AppButton onClick={bookingHandler}>Book Now</AppButton>
                 </div>
             </div>
         </>

@@ -46,7 +46,7 @@ const NavBar = () => {
                     {navLinks.map((linkObj) => (
                         <li
                             key={linkObj.name}
-                            className="font-medium text-lg lg:text-2xl"
+                            className="font-medium lg:text-xl"
                         >
                             <NavLink
                                 className={({ isActive }) =>

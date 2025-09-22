@@ -3,8 +3,6 @@ import api from "@/Services/api";
 import { useEffect, useState } from "react";
 import type { Car } from "@/types/car";
 
-
-
 export default function CarList() {
   const [cars,setCars] = useState<Car[]>([]);
   console.log(cars[0])
