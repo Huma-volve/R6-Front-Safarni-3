@@ -1,62 +1,73 @@
 import cardImg from "@/assets/images/cardImg.png";
 import {
-    BankCardForm,
-    PaymentMethodForm,
-    PaypalForm,
+  BankCardForm,
+  PaymentMethodForm,
+  PaypalForm,
 } from "@/components/shared";
-
 import { useState } from "react";
 import paypalIcon from "@/assets/icons/paypal.svg";
 import masterIcon from "@/assets/icons/mastercard.svg";
 import visaIcon from "@/assets/icons/visa.svg";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const publishabkeKey = import.meta.env.VITE_PUBLISHABLE_KEY;
+const stripePromise = loadStripe(publishabkeKey);
 
 const paymentOptionsArr = [
-    { label: "Paypal", val: "paypal", icon: paypalIcon },
-    { label: "Mastercard", val: "mastercard", icon: masterIcon },
-    { label: "Visa", val: "visa", icon: visaIcon },
+  { label: "Paypal", val: "paypal", icon: paypalIcon },
+  { label: "Mastercard", val: "mastercard", icon: masterIcon },
+  { label: "Visa", val: "visa", icon: visaIcon },
 ];
 
 const CheckoutPage = () => {
-    const [formType, setFormType] = useState("");
-    const location = useLocation();
+  const [formType, setFormType] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    // You will find here booking data that comes from different booking pages (tour or flight or car)
-    console.log(location.state);
+  // You will find here booking data that comes from different booking pages (tour or flight or car)
+  console.log(location.state);
+  if (location.state == null) {
+    navigate("/");
+  }
 
-    let content = (
-        <PaymentMethodForm
-            setFormType={setFormType}
-            paymentOptionsArr={paymentOptionsArr}
-        />
+  const clientSecret =
+    "pi_3S0XIT00Xq5cUHDc0gTeU98Z_secret_53dqpgxrvDaBBxX2vEhjtxGmh";
+
+  let content = (
+    <PaymentMethodForm
+      setFormType={setFormType}
+      paymentOptionsArr={paymentOptionsArr}
+    />
+  );
+  if (formType == "mastercard" || formType == "visa") {
+    content = (
+      <BankCardForm paymentOptionsArr={paymentOptionsArr} cardType={formType} />
     );
-    if (formType == "mastercard" || formType == "visa") {
-        content = (
-            <BankCardForm
-                paymentOptionsArr={paymentOptionsArr}
-                cardType={formType}
-            />
-        );
-    } else if (formType == "paypal") {
-        content = <PaypalForm paymentOptionsArr={paymentOptionsArr} />;
-    }
+  } else if (formType == "paypal") {
+    content = <PaypalForm paymentOptionsArr={paymentOptionsArr} />;
+  }
 
-    return (
-        <>
-            <div>
-                <img src={cardImg} alt="A bank card" className="m-auto" />
-            </div>
-            <div className="w-full max-w-[510px] mx-auto">
-                <h2 className="font-medium text-[26px] text-gray-900 text-center mb-8">
-                    Payment Methed
-                </h2>
-                <p className="font-medium text-lg mb-6 text-gray-700">
-                    Add You Payment Methed
-                </p>
-                {content}
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div>
+        <img src={cardImg} alt="A bank card" className="m-auto" />
+      </div>
+      <div className="w-full max-w-[510px] mx-auto">
+        <h2 className="font-medium text-[26px] text-gray-900 text-center mb-8">
+          Payment Methed
+        </h2>
+        <p className="font-medium text-lg mb-6 text-gray-700">
+          Add You Payment Methed
+        </p>
+        <Elements stripe={stripePromise} options={{ clientSecret }}>
+          {content}
+        </Elements>
+      </div>
+    </>
+  );
 };
 
 export default CheckoutPage;
