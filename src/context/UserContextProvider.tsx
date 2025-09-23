@@ -7,12 +7,18 @@ import { useAuthContext } from "./AuthContext";
 
 const url = "https://round5-safarnia.huma-volve.com/api";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const UserContext = createContext<IUserContext>({
     userInfo: null,
     getUserInfo: async () => {},
     UpdateUserInfo: async () => {},
     deleteAccount: async () => {},
-    getBookingHistory: async () => {},
+    getMyFlightBookings: async () => {},
+    getMyCarBookings: async () => {},
+    getMyTourBookings: async () => {},
+    getMyRoomBookings: async () => {},
+    getTourDetails: async () => {},
+    getAllTour: async () => {},
 });
 
 interface UserContextProviderProps {

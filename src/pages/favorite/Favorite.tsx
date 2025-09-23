@@ -5,6 +5,7 @@ import Loader from "@/components/shared/Loader";
 import type { ITour } from "@/types";
 import { Link } from "react-router";
 import { ChevronLeft } from "lucide-react";
+import NoResults from "@/components/shared/NoResults";
 
 export default function Favorite() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -32,11 +33,7 @@ export default function Favorite() {
                     <h1 className="font-medium text-xl">Favorite</h1>
                     <span></span>
                 </div>
-                {!favorites?.length && !isLoading && (
-                    <div className="text-center p-10 text-red-400 font-medium">
-                        Not added to your favorites yet
-                    </div>
-                )}
+                {!favorites?.length && !isLoading && <NoResults />}
 
                 {isLoading ? (
                     <Loader />

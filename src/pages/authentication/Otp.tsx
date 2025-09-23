@@ -12,7 +12,6 @@ import ContentSecContainer from "./components/ContentSecContainer";
 import PageTitle from "./components/PageTitle";
 import CountDown from "./components/CountDown";
 import OtpInput from "./components/OtpInput";
-import InlineLinkText from "./components/InlineLinkText";
 import AppButton from "../../components/shared/AppButton";
 import { OTPValidationSchema } from "@/lib/validation";
 import {
@@ -23,14 +22,12 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { sendOTP } from "@/lib/api/api";
-import { useAuthContext } from "@/context/AuthContext";
 import ErrorMsg from "@/components/shared/ErrorMsg";
+import { toast } from "sonner";
 
 function Otp() {
     const [error, setError] = useState("");
     const [time, setTime] = useState(30);
-
-    const { setToken } = useAuthContext();
 
     const navigate = useNavigate();
 
@@ -44,9 +41,7 @@ function Otp() {
         },
     });
 
-    const otpAllowed = sessionStorage.getItem("otpAllowed");
-
-    if (otpAllowed !== "true") return <Navigate to="/forget-password" />;
+    if (!email) return <Navigate to="/forget-password" />;
 
     async function onSubmit(values: z.infer<typeof OTPValidationSchema>) {
         try {
@@ -57,13 +52,17 @@ function Otp() {
                 return setError(result.message || "Email verification failed");
 
             form.reset();
-            setToken(token);
-            navigate("/new-password");
+            navigate("/new-password", { state: { token } });
         } catch (error: unknown) {
             if (axios.isAxiosError(error))
                 setError(error.response?.data?.message);
             else setError("An unexpected error occurred.");
         }
+    }
+
+    function handleSendOTPAgain() {
+        setTime(30);
+        toast("You otp is 11111");
     }
 
     return (
@@ -96,11 +95,16 @@ function Otp() {
                                 </FormItem>
                             )}
                         />
-                        <InlineLinkText
-                            text="OTP not receive?"
-                            link="send again"
-                            linkPath="/otp"
-                        />
+                        <div className="flex items-center gap-2 mx-auto">
+                            <p>OTP not receive?</p>
+                            <button
+                                type="button"
+                                className="text-blue-700 font-semibold cursor-pointer"
+                                onClick={handleSendOTPAgain}
+                            >
+                                send again
+                            </button>
+                        </div>
                         <AppButton>Verify</AppButton>
                     </form>
                 </Form>

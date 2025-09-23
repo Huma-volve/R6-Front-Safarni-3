@@ -22,8 +22,8 @@ function LoginForm() {
     const form = useForm<z.infer<typeof loginValidationSchema>>({
         resolver: zodResolver(loginValidationSchema),
         defaultValues: {
-            email: "hagar2@dev.com",
-            password: "12345678",
+            email: "",
+            password: "",
         },
     });
 

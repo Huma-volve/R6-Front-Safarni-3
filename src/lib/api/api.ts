@@ -75,9 +75,11 @@ export async function sendOTP(otp: string, email: string) {
 export async function resetPassword(
     newPassword: string,
     passwordConfirmation: string,
-    token: string
+    token: string | null
 ) {
     try {
+        if (!token)
+            throw new Error("token is not found. Cannot reset password");
         const res = await axios.post(
             `${safarni}/reset-password`,
             {

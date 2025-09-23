@@ -12,6 +12,7 @@ import FormInput from "./FormInput";
 import AppButton from "../../../components/shared/AppButton";
 import { forgetPassword } from "@/lib/api/api";
 import ErrorMsg from "../../../components/shared/ErrorMsg";
+import { toast } from "sonner";
 
 function ForgetPasswordForm() {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ function ForgetPasswordForm() {
     const form = useForm<z.infer<typeof forgetPasswordValidationSchema>>({
         resolver: zodResolver(forgetPasswordValidationSchema),
         defaultValues: {
-            email: "hagar2@dev.com",
+            email: "",
         },
     });
 
@@ -31,8 +32,8 @@ function ForgetPasswordForm() {
             await forgetPassword(values.email);
 
             form.reset();
-            sessionStorage.setItem("otpAllowed", "true");
             navigate("/otp", { state: { email: values.email } });
+            toast("You otp is 11111");
         } catch (error: unknown) {
             if (axios.isAxiosError(error))
                 setError(error.response?.data?.message);

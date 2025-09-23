@@ -4,6 +4,7 @@ import { z } from "zod";
 import { Lock } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import axios from "axios";
 
 import { Form } from "@/components/ui/form";
@@ -13,12 +14,11 @@ import PasswordGuide from "./PasswordGuide";
 import AppButton from "../../../components/shared/AppButton";
 import { resetPassword } from "@/lib/api/api";
 import ErrorMsg from "../../../components/shared/ErrorMsg";
-import { useAuthContext } from "@/context/AuthContext";
 
 function NewPasswordForm() {
     const navigate = useNavigate();
     const [error, setError] = useState("");
-    const { token } = useAuthContext();
+    const location = useLocation();
 
     const form = useForm<z.infer<typeof newPasswordValidationSchema>>({
         resolver: zodResolver(newPasswordValidationSchema),
@@ -32,8 +32,11 @@ function NewPasswordForm() {
         values: z.infer<typeof newPasswordValidationSchema>
     ) {
         try {
-            if (!token) console.log("test");
-            await resetPassword(values.password, values.confirmPassword, token);
+            await resetPassword(
+                values.password,
+                values.confirmPassword,
+                location.state.token
+            );
 
             form.reset();
             navigate("/done");

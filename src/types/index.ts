@@ -82,10 +82,6 @@ export type Link = {
 
 // user & profile
 
-export interface LikeButtonProps {
-    id: number;
-}
-
 export interface IUserInfo {
     id: number;
     name: string;
@@ -101,15 +97,20 @@ export interface IUserUpdateData {
 
 export interface IUserContext {
     userInfo: IUserInfo | null;
-    getUserInfo: () => Promise<void>;
+    getUserInfo: () => Promise<any>;
     UpdateUserInfo: (data: IUserUpdateData) => Promise<void>;
-    deleteAccount: () => Promise<void>;
-    getBookingHistory: () => Promise<void>;
+    deleteAccount: () => Promise<any>;
+    getMyFlightBookings: () => Promise<any>;
+    getMyCarBookings: () => Promise<any>;
+    getMyTourBookings: () => Promise<any>;
+    getMyRoomBookings: () => Promise<any>;
+    getTourDetails: (id: number) => Promise<any>;
+    getAllTour: () => Promise<any>;
 }
 
 export interface FavoriteContextType {
     favorites: Favorite[];
-    getFavorites: () => Promise<AxiosResponse<any> | void>;
+    getFavorites: () => Promise<AxiosResponse<unknown> | void>;
     addToFavorites: (id: number) => Promise<void>;
     deleteFromFavorites: (id: number) => Promise<void>;
 }

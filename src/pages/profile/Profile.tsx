@@ -32,6 +32,7 @@ import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/shared/Loader";
 import { useAuthContext } from "@/context/AuthContext";
+import { TOKEN } from "@/constants";
 
 export default function Profile() {
     const { getUserInfo, UpdateUserInfo } = useContext(UserContext);
@@ -82,7 +83,7 @@ export default function Profile() {
 
     function logout() {
         setToken(null);
-        localStorage.removeItem("token");
+        localStorage.removeItem(TOKEN);
         navigate("/");
     }
 
