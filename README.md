@@ -1,69 +1,57 @@
-# React + TypeScript + Vite
+# Safarni ✈️🚗🏨🌍
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Safarni is a travel booking web app that helps users explore and book **cars, tours, hotel rooms, and flights** — all in one place. With built-in search and price comparison, Safarni makes it easier to plan the perfect trip.
 
-Currently, two official plugins are available:
+Built with **React.js, TypeScript, Tailwind CSS, and shadcn/ui**, it offers a sleek, responsive, and modern interface for a seamless travel booking experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* **User Accounts** – Sign up, log in, and manage bookings.
+* **Car Booking** – Rent cars for trips and transfers.
+* **Tour Booking** – Explore and book tours by location or category.
+* **Hotel Rooms** – Search and book hotels with details and availability.
+* **Flights** – Find and book flights with multiple options.
+* **Search & Compare** – Search for specific tours and **compare prices** across providers.
+* **Responsive UI** – Optimized design using **shadcn/ui** and **Tailwind CSS**.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🛠️ Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* **Frontend:** React.js, TypeScript
+* **UI Framework:** Tailwind CSS, shadcn/ui
+* **State Management:** React Query / Context API (based on use case)
+* **APIs:** Travel, hotel, and flight APIs integration
+* **Routing:** React Router
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+* **Node.js** (v18+)
+* **npm** or **yarn**
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/safarni.git
+
+# Navigate to project folder
+cd safarni
+
+# Install dependencies
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Run the App
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+App runs at **[http://localhost:5173](http://localhost:5173)** (Vite default).
